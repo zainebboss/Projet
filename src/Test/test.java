@@ -5,6 +5,7 @@
  */
 package Test;
 import Entites.Utilisateur;
+import Services.MetierUtilisateur;
 import Services.ServiceUtilisateur;
 import java.sql.*;
 import java.util.List;
@@ -23,12 +24,13 @@ static ResultSet result;
     public static void main(String[] args) {
         // TODO code application logic here
          ServiceUtilisateur ser = new ServiceUtilisateur();
+         MetierUtilisateur met =new MetierUtilisateur();
         
         Utilisateur p1 = new Utilisateur();
         p1.setEmail("email");
         p1.setPassword("password");
         p1.setRole("role");
-        p1.setNom("boussaid");
+        p1.setNom("lkknbjnk");
         p1.setPrenom("bb");
         p1.setTelephone(12101345);
         p1.setAdresse("adresse");
@@ -44,6 +46,7 @@ static ResultSet result;
         p2.setAdresse("adresse");
         p2.setDate_naissance(Date.valueOf("1996-01-25"));
        p2.setEnable(true);
+       
         
         
      
@@ -54,8 +57,9 @@ static ResultSet result;
        //ser.modifier(p2);
        //ser.supprimer(p2);
        
-       ser.modifier(p1);
-       
+       //ser.modifier(p1);
+       met.encrypt("zaineb");
+       met.decrypt("JQY^UR");
        
        
         }
