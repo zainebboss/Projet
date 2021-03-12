@@ -32,7 +32,7 @@ static ResultSet result;
         p1.setRole("role");
         p1.setNom("lkknbjnk");
         p1.setPrenom("bb");
-        p1.setTelephone(12101345);
+        p1.setTelephone("hkjl");
         p1.setAdresse("adresse");
         p1.setDate_naissance(Date.valueOf("1996-01-25"));
        p1.setEnable(true);
@@ -42,7 +42,7 @@ static ResultSet result;
         p2.setRole("role");
         p2.setNom("zaineb");
         p2.setPrenom("boussaid");
-        p2.setTelephone(12101345);
+        p2.setTelephone("12101345");
         p2.setAdresse("adresse");
         p2.setDate_naissance(Date.valueOf("1996-01-25"));
        p2.setEnable(true);
@@ -54,12 +54,12 @@ static ResultSet result;
          //  System.out.println(list);
        //
        //ser.ajouter(p1);
-       //ser.modifier(p2);
-       //ser.supprimer(p2);
+      // ser.modifier(p2);
+      ser.supprimer(p1);
        
        //ser.modifier(p1);
-       met.encrypt("zaineb");
-       met.decrypt("JQY^UR");
+       //met.encrypt("zaineb");
+       //met.decrypt("@QCCG_BT");
        
        
         }

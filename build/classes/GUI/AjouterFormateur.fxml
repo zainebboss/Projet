@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="588.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterFormateurController">
+   <children>
+      <TableView fx:id="tvformateur" layoutX="273.0" layoutY="123.0" onMouseClicked="#getSelected" prefHeight="314.0" prefWidth="554.0">
+        <columns>
+          <TableColumn fx:id="colemail" prefWidth="67.0" text="Email" />
+            <TableColumn fx:id="colnom" minWidth="0.0" prefWidth="67.0" text="Nom" />
+            <TableColumn fx:id="colprenom" prefWidth="85.0" text="Prenom" />
+            <TableColumn fx:id="coltelephone" prefWidth="95.0" text="Téléphone" />
+            <TableColumn fx:id="coladresse" prefWidth="108.0" text="Adresse" />
+            <TableColumn fx:id="coldate_naissance" prefWidth="131.0" text="Date naissance" />
+        </columns>
+      </TableView>
+      <TextField />
+      <Button fx:id="btnmodifier" layoutX="312.0" layoutY="481.0" mnemonicParsing="false" onAction="#onUpdate" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #27A6F8;" text="modifier" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <TextField fx:id="search" layoutX="485.0" layoutY="62.0" promptText="Search" />
+      <AnchorPane prefHeight="588.0" prefWidth="250.0" style="-fx-background-color: #27A6F8;">
+         <children>
+            <TextField fx:id="email" layoutX="51.0" layoutY="70.0" />
+            <TextField fx:id="nom" layoutX="51.0" layoutY="188.0" />
+            <TextField fx:id="prenom" layoutX="51.0" layoutY="247.0" />
+            <TextField fx:id="telephone" layoutX="51.0" layoutY="306.0" />
+            <TextField fx:id="adresse" layoutX="51.0" layoutY="370.0" />
+            <Label layoutX="37.0" layoutY="46.0" text="Email" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="102.0" text="Password" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="password" layoutX="51.0" layoutY="129.0" />
+            <Label layoutX="38.0" layoutY="160.0" text="Nom" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="220.0" text="Prenom" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="281.0" text="Téléphone" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="344.0" text="Adresse" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="date_naissance" layoutX="51.0" layoutY="427.0" prefHeight="25.0" prefWidth="149.0" />
+            <Label layoutX="30.0" layoutY="404.0" text="Date de naissance" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnajouter" layoutX="51.0" layoutY="478.0" mnemonicParsing="false" onAction="#Save" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" text="ajouter" textFill="#27a6f8">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnsupprimer" layoutX="646.0" layoutY="481.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #27A6F8;" text="supprimer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

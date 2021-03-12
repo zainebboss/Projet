@@ -38,13 +38,19 @@ import javax.swing.JOptionPane;
  */
 public class InscriptionController implements Initializable {
     
-
+    @FXML
     private TextField email;
+    @FXML
     private PasswordField password;
+    @FXML
     private TextField nom;
+    @FXML
     private TextField prenom;
+    @FXML
     private TextField telephone;
+    @FXML
     private TextField adresse;
+    @FXML
     private DatePicker date_naissance;
     
    
@@ -63,51 +69,22 @@ public class InscriptionController implements Initializable {
         String tpassword= password.getText();
         String tnom= nom.getText();
         String tprenom= prenom.getText();
-        Integer ttelephone= Integer.parseInt(telephone.getText());
+        String ttelephone= telephone.getText();
         String tadresse= adresse.getText();
         java.util.Date date_naissance = Date.from(this.date_naissance.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         java.sql.Date tdate_naissance = new java.sql.Date(date_naissance.getTime());
-        Utilisateur u= new Utilisateur (0, temail, tpassword, "apprenant", tnom, tprenom, ttelephone, tadresse, tdate_naissance, true);
+        Utilisateur u= new Utilisateur ();
+        u.setEmail(temail);
+        u.setPassword(tpassword);
+        u.setRole("ROLE_APPRENANT");
+        u.setNom(tnom);
+        u.setPrenom(tprenom);
+        u.setTelephone(ttelephone);
+        u.setAdresse(tadresse);
+        u.setDate_naissance(tdate_naissance);
+        u.setEnable(true);
         ServiceUtilisateur uc= new ServiceUtilisateur();
         uc.ajouter(u);
 }
-   
-
-      @FXML
-    private void OnAdd(ActionEvent event) {
-        try {
-            
-             java.util.Date date_naissance = Date.from(this.date_naissance.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        java.sql.Date tdate_naissance = new java.sql.Date(date_naissance.getTime());
-
-            System.out.println("=================Sauvegarde dans la base==================");
-            String temail= email.getText();
-        String tpassword= password.getText();
-        String trole="apprenant";
-        String tnom= nom.getText();
-        String tprenom= prenom.getText();
-        Integer ttelephone= Integer.parseInt(telephone.getText());
-        String tadresse= adresse.getText();
-            try {
-                
-
-                Utilisateur U = new Utilisateur(temail, tpassword, trole, tnom, tprenom, ttelephone, tadresse, tdate_naissance, true);
-                ServiceUtilisateur uc= new ServiceUtilisateur();
-               uc.ajouter(U);
-                JOptionPane.showMessageDialog(null, "Ajouter");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "vueiller verfirier");
-            }
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-            Parent root = loader.load();
-            LoginController pc2 = loader.getController();
-
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }     
-
-   
-
+  
 }

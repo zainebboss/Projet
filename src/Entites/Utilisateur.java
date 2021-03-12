@@ -7,6 +7,7 @@ package Entites;
 
 import java.sql.Date;
 
+
 /**
  *
  * @author Hp Omen
@@ -18,7 +19,7 @@ public class Utilisateur {
     private String role;
     private String nom;
     private String prenom;
-    private int telephone;
+    private String telephone;
     private String adresse;
     private Date date_naissance;
     private boolean enable;
@@ -26,20 +27,8 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public Utilisateur(String email, String password, String role, String nom, String prenom, int telephone, String adresse, Date date_naissance, boolean enable) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.telephone = telephone;
-        this.adresse = adresse;
-        this.date_naissance = date_naissance;
-        this.enable = enable;
-    }
-    
-
-    public Utilisateur(int id, String email, String password, String role, String nom, String prenom, int telephone, String adresse, Date date_naissance, boolean enable) {
+   
+    public Utilisateur(int id, String email, String password, String role, String nom, String prenom, String telephone, String adresse, Date date_naissance, boolean enable) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -52,7 +41,8 @@ public class Utilisateur {
         this.enable = enable;
     }
 
-    public Utilisateur(String email, String password, String nom, String prenom, int telephone, String adresse, Date date_naissance, boolean enable) {
+    public Utilisateur(int id, String email, String password, String nom, String prenom, String telephone, String adresse, Date date_naissance) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.nom = nom;
@@ -60,8 +50,10 @@ public class Utilisateur {
         this.telephone = telephone;
         this.adresse = adresse;
         this.date_naissance = date_naissance;
-        this.enable = enable;
     }
+
+   
+    
 
     public int getId() {
         return id;
@@ -87,7 +79,7 @@ public class Utilisateur {
         return prenom;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -111,7 +103,14 @@ public class Utilisateur {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        String crypte="";
+        for (int i=0; i<password.length();i++)  {
+            int c=password.charAt(i)^48; 
+            crypte=crypte+(char)c;
+             
+        }
+        
+     this.password=crypte;
     }
 
     public void setRole(String role) {
@@ -126,7 +125,7 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -147,6 +146,8 @@ public class Utilisateur {
     public String toString() {
         return "Utilisateur{" + "id=" + id + ", email=" + email + ", password=" + password + ", role=" + role + ", nom=" + nom + ", prenom=" + prenom + ", telephone=" + telephone + ", adresse=" + adresse + ", date_naissance=" + date_naissance + ", enable=" + enable + '}';
     }
+
+    
     
     
     
