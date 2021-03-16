@@ -84,7 +84,21 @@ public class InscriptionController implements Initializable {
         u.setDate_naissance(tdate_naissance);
         u.setEnable(true);
         ServiceUtilisateur uc= new ServiceUtilisateur();
-        uc.ajouter(u);
+        boolean result = uc.getByEmail(u);
+        email.setText("");
+        password.setText("");
+        nom.setText("");
+        prenom.setText("");
+        telephone.setText("");
+        adresse.setText("");
+        
+        if (result){
+             JOptionPane.showMessageDialog(null, "votre inscription ajouter avec succes");
+             
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "l'apprenant est déja existe");
+        }
 }
   
 }

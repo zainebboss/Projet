@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="GUI.AvisController">
+   <children>
+      <HBox fx:id="hinit" layoutY="162.0" prefHeight="103.0" prefWidth="600.0" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="162.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxangry" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@triste_h.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxnothappy" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@ic-ct-t.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxhappy" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@ic-ct-s.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox fx:id="hangry" prefHeight="103.0" prefWidth="600.0" visible="false" AnchorPane.topAnchor="162.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onContextMenuRequested="#showHboxangry" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@triste.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxnothappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-t.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxhappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-s.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox fx:id="hnothappy" prefHeight="103.0" prefWidth="600.0" visible="false" AnchorPane.topAnchor="162.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxangry" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@triste_h.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxnothappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-t-h.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxhappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-s.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox fx:id="hhappy" prefHeight="103.0" prefWidth="600.0" visible="false" AnchorPane.topAnchor="162.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxangry" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@triste_h.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxnothappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-t.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxhappy" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@ic-ct-s-h.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Label layoutX="99.0" layoutY="303.0" text="Cliquez sur le smile de votre choix">
+         <font>
+            <Font name="Bookman Old Style" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="100.0" layoutY="366.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #0fea88;" text="VALIDER" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="23.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

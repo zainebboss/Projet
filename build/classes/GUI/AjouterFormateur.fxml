@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="588.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterFormateurController">
    <children>
-      <TableView fx:id="tvformateur" layoutX="273.0" layoutY="123.0" onMouseClicked="#getSelected" prefHeight="314.0" prefWidth="554.0">
+      <TableView fx:id="tvformateur" layoutX="273.0" layoutY="123.0" onMouseClicked="#getSelected" prefHeight="314.0" prefWidth="577.0">
         <columns>
           <TableColumn fx:id="colemail" prefWidth="67.0" text="Email" />
             <TableColumn fx:id="colnom" minWidth="0.0" prefWidth="67.0" text="Nom" />

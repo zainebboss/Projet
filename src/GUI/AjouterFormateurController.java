@@ -140,7 +140,7 @@ public class AjouterFormateurController implements Initializable {
             
         }
         else{
-            JOptionPane.showMessageDialog(null, "l'utilisateur existe deja");
+            JOptionPane.showMessageDialog(null, "le formateur est existe deja");
         }
     
         
@@ -212,22 +212,22 @@ public class AjouterFormateurController implements Initializable {
         tvformateur.setItems(data);
              FilteredList<Utilisateur> filteredData = new FilteredList<>(data, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(f -> {
+            filteredData.setPredicate(U -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (f.getNom().toLowerCase().contains(lowerCaseFilter)) {
+                if (U.getNom().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } 
-                if (f.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                if (U.getEmail().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } 
-                if (f.getPrenom().toLowerCase().contains(lowerCaseFilter)) {
+                if (U.getPrenom().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } 
-                if (f.getTelephone().toLowerCase().contains(lowerCaseFilter)) {
+                if (U.getTelephone().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } 
                 else {

@@ -31,7 +31,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     private ResultSet rs;
     int i=0;
     final String pattern = "^[A-Za-z0-9+_.-]+@(.+)$";
-    final String pattern1 ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*])(?=\\S+$).{8,}$";
+    final String pattern1 ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
 
     public ServiceUtilisateur() {
         con=Connexion.getInstance().getConnection();
@@ -59,7 +59,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                 u.setPrenom(rs.getString("prenom"));
                 u.setTelephone(rs.getString("telephone"));
                  u.setAdresse(rs.getString("adresse"));
-                 u.setDate_naissance(rs.getDate("date_naissance"));
+                 u.setDate_naissance(rs.getDate("age"));
                  u.setEnable(rs.getBoolean("enable"));
                 list.add(u);  
             }
@@ -67,7 +67,6 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
             stat.close();
     
             if (list.size()!=0){
-                JOptionPane.showMessageDialog(null, "l'utilisateur existe deja");
                 return false;
             }
             else{
@@ -90,12 +89,12 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
          stat=con.prepareStatement("INSERT INTO utilisateur(email,password,role,nom,prenom,telephone,adresse,date_naissance,enable) VALUES (?,?,?,?,?,?,?,?,?)");
               //
          
-//if(pregMatch(pattern, U.getEmail())){
-         //   stat.setString(1, U.getEmail());};
-         //if(pregMatch1(pattern1,U.getPassword())){    
-           // stat.setString(2, U.getPassword());}
-         stat.setString(1,U.getEmail());
-         stat.setString(2,U.getPassword());  
+           if(pregMatch(pattern, U.getEmail())){
+           stat.setString(1, U.getEmail());};
+//           if(pregMatch1(pattern1,U.getPassword())){    
+//           stat.setString(2, U.getPassword());}
+//         stat.setString(1,U.getEmail());
+       stat.setString(2,U.getPassword());  
          stat.setString(3,U.getRole());
          stat.setString(4,U.getNom());
          stat.setString(5, U.getPrenom());
@@ -162,10 +161,9 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                 u.setNom(rs.getString("nom"));
                 u.setPrenom(rs.getString("prenom"));
                 u.setTelephone(rs.getString("telephone"));
-                 u.setAdresse(rs.getString("adresse"));
-                 u.setDate_naissance(rs.getDate("date_naissance"));
-                 u.setEnable(rs.getBoolean("enable"));
-                
+                u.setAdresse(rs.getString("adresse"));
+                u.setDate_naissance(rs.getDate("date_naissance"));
+                u.setEnable(rs.getBoolean("enable"));
                 list.add(u);
             }
             rs.close();

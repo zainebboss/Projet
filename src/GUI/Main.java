@@ -26,7 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("AjouterFormateur.FXML"));
+            Parent root = FXMLLoader.load(getClass().getResource("Login.FXML"));
             Scene scene = new Scene(root, 612, 512);
             primaryStage.setTitle("Gestion Utilisateur");
             String css = Main.class.getResource("FichierCss.css").toExternalForm();
