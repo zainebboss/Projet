@@ -32,7 +32,6 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     int i=0;
     final String pattern = "^[A-Za-z0-9+_.-]+@(.+)$";
     final String pattern1 ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
-
     public ServiceUtilisateur() {
         con=Connexion.getInstance().getConnection();
     }
@@ -87,14 +86,13 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         
         try {
          stat=con.prepareStatement("INSERT INTO utilisateur(email,password,role,nom,prenom,telephone,adresse,date_naissance,enable) VALUES (?,?,?,?,?,?,?,?,?)");
-              //
-         
-           if(pregMatch(pattern, U.getEmail())){
-           stat.setString(1, U.getEmail());};
+              
+         if(pregMatch(pattern, U.getEmail())){
+         stat.setString(1, U.getEmail());};
 //           if(pregMatch1(pattern1,U.getPassword())){    
 //           stat.setString(2, U.getPassword());}
 //         stat.setString(1,U.getEmail());
-       stat.setString(2,U.getPassword());  
+         stat.setString(2,U.getPassword());  
          stat.setString(3,U.getRole());
          stat.setString(4,U.getNom());
          stat.setString(5, U.getPrenom());
@@ -134,7 +132,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
  PreparedStatement pst2 = con.prepareStatement(req);
             pst2.setInt(1, U.getId());
             pst2.executeUpdate();
-            System.out.println("livre supprimé du panier");
+            System.out.println("utilisateur supprimer");
             etat = true;
         } catch (SQLException e) {
             e.printStackTrace();
