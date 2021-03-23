@@ -52,6 +52,8 @@ public class InscriptionController implements Initializable {
     private TextField adresse;
     @FXML
     private DatePicker date_naissance;
+    @FXML
+    private Button inscription;
     
    
 
@@ -62,6 +64,7 @@ public class InscriptionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+    @FXML
     public void Save(ActionEvent event){
         
         System.err.println("Sauvegarde dans la base");

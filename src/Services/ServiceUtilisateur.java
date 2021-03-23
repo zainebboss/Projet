@@ -58,7 +58,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                 u.setPrenom(rs.getString("prenom"));
                 u.setTelephone(rs.getString("telephone"));
                  u.setAdresse(rs.getString("adresse"));
-                 u.setDate_naissance(rs.getDate("age"));
+                 u.setDate_naissance(rs.getDate("date_naissance"));
                  u.setEnable(rs.getBoolean("enable"));
                 list.add(u);  
             }

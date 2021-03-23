@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="411.0" prefWidth="613.0" stylesheets="@FichierCss.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InterfaceAdminController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="611.0" stylesheets="@FichierCss.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InterfaceAdminController">
    <children>
       <VBox prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #28252e;">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #0fea88;" text="   ADMIN" textFill="WHITE">
+            <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #2b76a4;" text="   ADMIN" textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="21.0" />
                </font>
@@ -96,7 +96,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="dashboard" layoutX="199.0" prefHeight="401.0" prefWidth="414.0" style="-fx-background-color: #ffffff;">
+      <VBox fx:id="dashboard" layoutX="199.0" prefHeight="450.0" prefWidth="414.0" style="-fx-background-color: #ffffff;">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -170,17 +170,17 @@
             </TableView>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnajouter" mnemonicParsing="false" onMouseClicked="#showajouter" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #0fea88;" text="Ajouter">
+                  <Button fx:id="btnajouter" mnemonicParsing="false" onMouseClicked="#showajouter" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #2b76a4;" text="Ajouter">
                      <HBox.margin>
                         <Insets left="25.0" top="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnmodifier" mnemonicParsing="false" onAction="#showmodifier" onMouseClicked="#getSelected" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #0fea88;" text="Modifier">
+                  <Button fx:id="btnmodifier" mnemonicParsing="false" onAction="#showmodifier" onMouseClicked="#getSelected" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #2b76a4;" text="Modifier">
                      <HBox.margin>
                         <Insets left="25.0" top="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnsupprimer" mnemonicParsing="false" onAction="#supprimer" onMouseClicked="#getSelected" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #0fea88;" text="Supprimer">
+                  <Button fx:id="btnsupprimer" mnemonicParsing="false" onAction="#supprimer" onMouseClicked="#getSelected" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #2b76a4;" text="Supprimer">
                      <HBox.margin>
                         <Insets left="25.0" top="25.0" />
                      </HBox.margin>
@@ -235,12 +235,12 @@
                   <Insets bottom="15.0" left="100.0" />
                </VBox.margin>
             </DatePicker>
-            <Button fx:id="btnajouterformateur" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="222.0" style="-fx-background-color: #0fea88;" text="Ajouter" visible="false">
+            <Button fx:id="btnajouterformateur" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="222.0" style="-fx-background-color: #2b76a4;" text="Ajouter">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnmodifierformateur" mnemonicParsing="false" onAction="#onUpdate" prefHeight="30.0" prefWidth="222.0" style="-fx-background-color: #0fea88;" text="Modifier">
+            <Button fx:id="btnmodifierformateur" mnemonicParsing="false" onAction="#onUpdate" prefHeight="30.0" prefWidth="222.0" style="-fx-background-color: #2b76a4;" text="Modifier">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>

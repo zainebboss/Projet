@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,9 +15,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="600.0" style="-fx-background-color: #28252e;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
-      <HBox layoutY="35.0" prefHeight="73.0" prefWidth="600.0" style="-fx-border-color: #0fea88; -fx-border-width: 3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="box" layoutY="35.0" prefHeight="73.0" prefWidth="600.0" style="-fx-border-color: #2b76a4; -fx-border-width: 3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="connexion" mnemonicParsing="false" onAction="#showPaneConnexion" prefHeight="45.0" prefWidth="270.0" style="-fx-background-color: #0fea88;" text="Connexion" textFill="WHITE">
+            <Button fx:id="connexion" mnemonicParsing="false" onAction="#showPaneConnexion" prefHeight="45.0" prefWidth="270.0" style="-fx-background-color: #2b76a4;" text="Connexion" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="31.0" />
                </font>
@@ -38,8 +39,7 @@
          <children>
             <TextField fx:id="email" layoutX="39.0" layoutY="124.0" prefHeight="40.0" prefWidth="523.0" promptText="Email" />
             <PasswordField fx:id="password" layoutX="39.0" layoutY="189.0" prefHeight="40.0" prefWidth="523.0" promptText="Password" />
-            <ComboBox fx:id="role" layoutX="262.0" layoutY="59.0" prefHeight="40.0" prefWidth="300.0" promptText="Choisir Rôle" />
-            <Button fx:id="con" layoutX="101.0" layoutY="252.0" mnemonicParsing="false" onAction="#Connection" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #0fea88;" text="Connexion" textFill="WHITE">
+            <Button fx:id="con" layoutX="101.0" layoutY="252.0" mnemonicParsing="false" onAction="#Connection" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #2b76a4;" text="Connexion" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="28.0" />
                </font>
@@ -48,23 +48,72 @@
       </AnchorPane>
       <AnchorPane fx:id="paneInscription" prefHeight="423.0" prefWidth="600.0" AnchorPane.bottomAnchor="-34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
+            <TextField fx:id="id" layoutX="351.0" layoutY="68.0" prefHeight="7.0" prefWidth="0.0" />
             <TextField fx:id="emaill" layoutX="310.0" layoutY="22.0" prefHeight="30.0" prefWidth="240.0" promptText="Email" />
             <TextField fx:id="prenom" layoutX="310.0" layoutY="147.0" prefHeight="30.0" prefWidth="240.0" promptText="Prénom" />
             <TextField fx:id="telephone" layoutX="310.0" layoutY="189.0" prefHeight="30.0" prefWidth="240.0" promptText="Téléphone" />
             <TextField fx:id="adresse" layoutX="310.0" layoutY="233.0" prefHeight="30.0" prefWidth="240.0" promptText="Adresse" />
             <TextField fx:id="nom" layoutX="310.0" layoutY="106.0" prefHeight="30.0" prefWidth="240.0" promptText="Nom" />
             <PasswordField fx:id="passwordd" layoutX="310.0" layoutY="65.0" prefHeight="30.0" prefWidth="240.0" promptText="Password" />
-            <Button fx:id="inscrire" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" onAction="#Save" prefHeight="40.0" prefWidth="500.0" style="-fx-background-color: #0fea88;" text="S'inscrire" textFill="WHITE">
+            <Button fx:id="inscrire" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" onAction="#Save" onMouseClicked="#showPaneFormation" prefHeight="40.0" prefWidth="500.0" style="-fx-background-color: #2b76a4;" text="S'inscrire" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="28.0" />
                </font>
             </Button>
             <ImageView fitHeight="283.0" fitWidth="240.0" layoutX="35.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@icon.png" />
+                  <Image url="@friend.png" />
                </image>
             </ImageView>
             <DatePicker fx:id="date_naissance" layoutX="310.0" layoutY="282.0" prefHeight="30.0" prefWidth="240.0" promptText="Date de naissance" />
+         </children>
+      </AnchorPane>
+      <AnchorPane id="AnchorPane" fx:id="paneFormation" layoutX="-7.0" opacity="0.78" prefHeight="515.0" prefWidth="615.0" stylesheets="@FichierCss.css" visible="false">
+         <children>
+            <AnchorPane prefHeight="100.0" prefWidth="615.0" style="-fx-background-color: #2b76a4;">
+               <children>
+                  <Label layoutX="237.0" layoutY="10.0" text="FORMATION À DISTANCE," textFill="#27a3eb">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="236.0" layoutY="50.0" text="ÉTUDIEZ À VOTRE RYTHME" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="100.0" prefHeight="324.0" prefWidth="615.0">
+               <children>
+                  <ImageView fitHeight="323.0" fitWidth="615.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@importance-of-elearning-in-education-1024x683.jpg" />
+                     </image>
+                  </ImageView>
+                  <ComboBox fx:id="formation" layoutX="63.0" layoutY="162.0" onMouseClicked="#getFor" prefHeight="34.0" prefWidth="278.0" promptText="Choissiser votre formation*" style="-fx-background-color: #FFFFFF;" />
+                  <Label layoutX="72.0" layoutY="114.0" prefHeight="27.0" prefWidth="278.0" text="Quel domaine vous intéresse ?" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn" layoutX="141.0" layoutY="217.0" mnemonicParsing="false" onAction="#SaveFormation" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #072671;" text="SUIVANT" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <Label layoutX="197.0" layoutY="434.0" text="LA FORMATION À DISTANCE,">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="268.0" layoutY="456.0" text="C'EST QUOI ?" textFill="#27a3eb">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
