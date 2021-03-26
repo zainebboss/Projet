@@ -6,10 +6,13 @@
 package GUI;
 
 import Entites.Formation;
+import Entites.Inscription;
 import Entites.Utilisateur;
 import Services.SendMailJava;
 import Services.ServiceUtilisateur;
 import Utils.Connexion;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -40,6 +43,21 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.geometry.Insets;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 
 
@@ -53,9 +71,9 @@ public class LoginController implements Initializable {
     @FXML
     private TextField id;
     @FXML
-    private TextField emaill;
+    private TextField email;
     @FXML
-    private PasswordField passwordd;
+    private PasswordField password;
     @FXML
     private TextField nom;
     @FXML
@@ -66,20 +84,26 @@ public class LoginController implements Initializable {
     private TextField adresse;
     @FXML
     private DatePicker date_naissance;
-    
     @FXML
-     private TextField email;
+    private TextField search;
     @FXML
-     private PasswordField password;
+    private TextField search1;
+
      @FXML
-     private AnchorPane paneConnexion;
+     private AnchorPane acceuil;
      @FXML
      private AnchorPane paneInscription;
      @FXML
      private AnchorPane paneFormation;
+     @FXML
+     private AnchorPane menu;
+     
+     @FXML
+     private AnchorPane avis;
       @FXML
      private HBox box;
-     
+      @FXML
+     private HBox hmenu;
      @FXML
      private Button connexion;
      @FXML
@@ -88,22 +112,90 @@ public class LoginController implements Initializable {
     private Button inscrire;
      @FXML
     private Button con;
+     @FXML
+    private Button modifierprofil;
      
      @FXML
-    private ComboBox<Formation>  formation;
+    private ComboBox <String>formation;
     @FXML
     private Button btn;
+    @FXML
+    private HBox hinit;
+    @FXML
+    private HBox hangry;
+    @FXML
+    private HBox hnothappy;
+    @FXML
+    private HBox hhappy;
+    @FXML
+    private VBox menuadmin;
+    @FXML
+    private VBox menuformateur;
+    @FXML
+    private VBox dashboard;
+     @FXML
+    private VBox apprenant;
+      @FXML
+    private VBox listeFormateur;
+    @FXML
+    private ComboBox <String>formateur;
+     @FXML
+    private PieChart statistique;
+    @FXML
+    private TableView<Utilisateur> tvapprenant;
+    private TableColumn<Utilisateur, Integer> cid;
+    @FXML
+    private TableColumn<Utilisateur, String> colemail;
+    @FXML
+    private TableColumn<Utilisateur, String> colnom;
+    @FXML
+    private TableColumn<Utilisateur, String> colprenom;
+    @FXML
+    private TableColumn<Utilisateur, String> coltelephone;
+    @FXML
+    private TableColumn<Utilisateur, String> coladresse;
+    @FXML
+    private TableColumn<Utilisateur, String> coldate_naissance;
+    @FXML
+    private TableView<Utilisateur> tvformateur;
+    @FXML
+    private TableColumn<Utilisateur, Integer> cid1;
+    @FXML
+    private TableColumn<Utilisateur, String> colemail1;
+    @FXML
+    private TableColumn<Utilisateur, String> colpassword1;
+    @FXML
+    private TableColumn<Utilisateur, String> colnom1;
+    @FXML
+    private TableColumn<Utilisateur, String> colprenom1;
+    @FXML
+    private TableColumn<Utilisateur, String> coltelephone1;
+    @FXML
+    private TableColumn<Utilisateur, String> coladresse1;
+    @FXML
+    private TableColumn<Utilisateur, String> coldate_naissance1;
+    @FXML
+    private TableColumn<Utilisateur, String> colaction;
+ 
     private int selectUti;
+    private int selectedFor ;
+    private int selectedFormateur;
     
-   
+    ObservableList<Utilisateur> dataa = FXCollections.observableArrayList();
     ObservableList<Utilisateur> data = FXCollections.observableArrayList();
+    ObservableList<Utilisateur> data1 = FXCollections.observableArrayList();
     ObservableList<Formation> liste = FXCollections.observableArrayList();
+    ObservableList <String> ff = FXCollections.observableArrayList();
+   
      
      
      private Connection cnx;
     private PreparedStatement pst;
     private ResultSet rs;
-    int selectedFor ;
+    @FXML
+    private Button valider;
+    
+   
     
 
     /**
@@ -111,31 +203,377 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        UpdateTable ();
-    }   
-    
+        UpdateTable();
+        UpdateTablee();
+        UpdateTableApprenant();
+        UpdateTableFormateur();
+        search();
+        search1();
+        
+        //liste Java
+        try {
+            ObservableList<Inscription> liste = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='JAVA'";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                liste.add(new Inscription (rs.getInt("id"), rs.getInt("utilisateur_id"), rs.getInt("formation_id"), rs.getDate("date_inscrit")));
+            }
+            //liste SQL
+            
+            ObservableList<Inscription> liste1 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete1 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='SQL'";
+            PreparedStatement pst1 = cnx.prepareStatement(requete1);
+            ResultSet rs1 = pst1.executeQuery();
+            while (rs1.next()) {
+                liste1.add(new Inscription (rs1.getInt("id"), rs1.getInt("utilisateur_id"), rs1.getInt("formation_id"), rs1.getDate("date_inscrit")));
+            }
+            //liste JAVASCRIPT
+           
+            ObservableList<Inscription> liste2 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete2 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='JAVASCRIPT'";
+            PreparedStatement pst2 = cnx.prepareStatement(requete2);
+            ResultSet rs2 = pst2.executeQuery();
+            while (rs2.next()) {
+                liste2.add(new Inscription (rs2.getInt("id"), rs2.getInt("utilisateur_id"), rs2.getInt("formation_id"), rs2.getDate("date_inscrit")));
+            }
+            //liste PHP
+            
+            ObservableList<Inscription> liste3 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete3 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='PHP'";
+            PreparedStatement pst3 = cnx.prepareStatement(requete3);
+            ResultSet rs3 = pst3.executeQuery();
+            while (rs3.next()) {
+                liste3.add(new Inscription (rs3.getInt("id"), rs3.getInt("utilisateur_id"), rs3.getInt("formation_id"), rs3.getDate("date_inscrit")));
+            }
+            
+            //liste CodeName
+            
+            ObservableList<Inscription> liste4 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete4 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='CodeName'";
+            PreparedStatement pst4 = cnx.prepareStatement(requete4);
+            ResultSet rs4 = pst4.executeQuery();
+            while (rs4.next()) {
+                liste4.add(new Inscription (rs4.getInt("id"), rs4.getInt("utilisateur_id"), rs4.getInt("formation_id"), rs4.getDate("date_inscrit")));
+            }
+            
+            //liste Symfony
+            
+            ObservableList<Inscription> liste5 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete5 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='Symfony'";
+            PreparedStatement pst5 = cnx.prepareStatement(requete5);
+            ResultSet rs5 = pst5.executeQuery();
+            while (rs5.next()) {
+                liste5.add(new Inscription (rs5.getInt("id"), rs5.getInt("utilisateur_id"), rs5.getInt("formation_id"), rs5.getDate("date_inscrit")));
+            }
+            
+            //liste jquery
+            
+            ObservableList<Inscription> liste6 = FXCollections.observableArrayList();
+            cnx = Connexion.getInstance().getConnection();
+            String requete6 = "SELECT i.*, f.* FROM inscription i, formation f WHERE i.formation_id = f.id AND f.titre='Jquery'";
+            PreparedStatement pst6 = cnx.prepareStatement(requete6);
+            ResultSet rs6 = pst6.executeQuery();
+            while (rs6.next()) {
+                liste6.add(new Inscription (rs6.getInt("id"), rs6.getInt("utilisateur_id"), rs6.getInt("formation_id"), rs6.getDate("date_inscrit")));
+            }
+            ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(
+                new PieChart.Data("JAVA", liste.size()),
+                    new PieChart.Data("JAVASCRIPT", liste2.size()),
+                new PieChart.Data("PHP", liste3.size()),
+                new PieChart.Data("SQL", liste1.size()),
+                new PieChart.Data("Symfony", liste5.size()),
+                 new PieChart.Data("JQUERY", liste6.size()),
+                new PieChart.Data("CodeNameOne", liste4.size()));
+                statistique.setData(pieData);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     
     @FXML
     public void showPaneConnexion(){
-        paneConnexion.setVisible(true);
-        paneInscription.setVisible(false);
+       box.setVisible(true);
+       id.setVisible(false);
+        email.setVisible(true);
+        password.setVisible(true);
+        nom.setVisible(false);
+        prenom.setVisible(false);
+        telephone.setVisible(false);
+        adresse.setVisible(false);
+        date_naissance.setVisible(false);
+        con.setVisible(true);
+        inscrire.setVisible(false);
+        modifierprofil.setVisible(false);
+        paneInscription.setVisible(true);
         paneFormation.setVisible(false);
+        acceuil.setVisible(false);
+        menu.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+        menuformateur.setVisible(false);
+        
     }
     @FXML
     public void showPaneInscription(){
-        paneConnexion.setVisible(false);
+        box.setVisible(true);
+       id.setVisible(false);
+        email.setVisible(true);
+        password.setVisible(true);
+        nom.setVisible(true);
+        prenom.setVisible(true);
+        telephone.setVisible(true);
+        adresse.setVisible(true);
+        date_naissance.setVisible(true);
+        con.setVisible(false);
+        modifierprofil.setVisible(false);
+        inscrire.setVisible(true);
         paneInscription.setVisible(true);
         paneFormation.setVisible(false);
+        acceuil.setVisible(false);
+        menu.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+        
     }
     @FXML
     public void showPaneFormation(){
-        paneConnexion.setVisible(false);
+        
         paneInscription.setVisible(false);
         paneFormation.setVisible(true);
         box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
     }
+    @FXML
+    public void showDashboard(){
         
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(true);
+        dashboard.setVisible(true);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+    }
+    @FXML
+    public void showDashboardFormateur(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(true);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(true);
+    }
+     @FXML
+    public void showmenuaFormateur(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(true);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(true);
+    }
+     @FXML
+    public void showmenu(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+         avis.setVisible(false);
+         menu.setVisible(true);
+         acceuil.setVisible(false);
+         hmenu.setVisible(false);
+         menuadmin.setVisible(false);
+         dashboard.setVisible(false);
+         apprenant.setVisible(false);
+         listeFormateur.setVisible(false);
+          menuformateur.setVisible(false);
+    }
+    @FXML
     
+    public void showinit(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+         avis.setVisible(true);
+         menu.setVisible(false);
+         acceuil.setVisible(false);
+         hmenu.setVisible(false);
+         menuadmin.setVisible(false);
+         dashboard.setVisible(false);
+         apprenant.setVisible(false);
+         listeFormateur.setVisible(false);
+          menuformateur.setVisible(false);
+    }
+    @FXML
+    public void showprofil() throws SQLException{
+         String req = "SELECT * FROM utilisateur WHERE email=?";
+            String temail= email.getText();
+             pst = cnx.prepareStatement(req);
+            pst.setString(1, temail);
+            rs = pst.executeQuery();
+             while (rs.next()) {      
+        id.setText(String.valueOf(rs.getInt("id")));
+        email.setText(rs.getString("email"));
+        password.setText(rs.getString("password"));
+        nom.setText(rs.getString("nom"));
+        prenom.setText(rs.getString("prenom"));
+        telephone.setText(rs.getString("telephone"));
+        adresse.setText(rs.getString("adresse"));
+        date_naissance.getEditor().setText(String.valueOf(rs.getDate("date_naissance")));
+             }
+         box.setVisible(false);
+       id.setVisible(false);
+        email.setVisible(true);
+        password.setVisible(true);
+        nom.setVisible(true);
+        prenom.setVisible(true);
+        telephone.setVisible(true);
+        adresse.setVisible(true);
+        date_naissance.setVisible(true);
+        con.setVisible(false);
+        inscrire.setVisible(false);
+        modifierprofil.setVisible(true);
+        paneInscription.setVisible(true);
+        paneFormation.setVisible(false);
+        acceuil.setVisible(false);
+        menu.setVisible(false);
+        hmenu.setVisible(true);
+        avis.setVisible(false);
+        menuadmin.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+  
+    }
+         @FXML
+    public void showHboxangry(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        hangry.setVisible(true);
+        hnothappy.setVisible(false);
+        hhappy.setVisible(false);
+        hinit.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+        
+    }
+    @FXML
+    public void showHboxnothappy(){
+           
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        hangry.setVisible(false);
+        hnothappy.setVisible(true);
+        hhappy.setVisible(false);
+        hinit.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+       
+    }
+    @FXML
+    public void showHboxhappy(){
+         
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        hangry.setVisible(false);
+        hnothappy.setVisible(false);
+        hhappy.setVisible(true);
+        hinit.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+        
+    }
+    @FXML
+    public void showlisteApprenant(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(true);
+        dashboard.setVisible(false);
+        apprenant.setVisible(true);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+    }
+    @FXML
+    public void showlisteApprenantFormateur(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(true);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(true);
+    }
+     @FXML
+    public void showlisteFormateur(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(true);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(true);
+         menuformateur.setVisible(false);
+    }
+    
+   
     
     @FXML
     public void Connection (ActionEvent event) throws Exception{
@@ -148,46 +586,16 @@ public class LoginController implements Initializable {
             
             rs=pst.executeQuery();
             if(rs.next()){
-                JOptionPane.showMessageDialog(null, "Email ou Password correct");
                 switch(rs.getString("role")){
                 case "ROLE_APPRENANT" :
-                     try {
-             con.getScene().getWindow().hide();
-                    Parent root =FXMLLoader.load(getClass().getResource("Avis.fxml"));
-                Stage mainStage = new Stage();
-                Scene scene = new Scene(root);
-                mainStage.setScene(scene);
-                mainStage.show();
-             
-        } catch (IOException ex) {
-            System.err.println(ex);
-        };break;
+                    showmenu();
+      ;break;
         
       case "ROLE_FORMATEUR" :
-               try {
-             con.getScene().getWindow().hide();
-                Parent root =FXMLLoader.load(getClass().getResource("InterfaceFormateur.fxml"));
-                Stage mainStage = new Stage();
-                Scene scene = new Scene(root);
-                mainStage.setScene(scene);
-                mainStage.show();
-             
-        } catch (IOException ex) {
-            System.err.println(ex);
-        };break;
+               showmenuaFormateur();
+          ;break;
          case "ROLE_ADMIN" :
-                     try {
-               
-
-             con.getScene().getWindow().hide();
-                Parent root =FXMLLoader.load(getClass().getResource("InterfaceAdmin.fxml"));
-                Stage mainStage = new Stage();
-                Scene scene = new Scene(root);
-                mainStage.setScene(scene);
-                mainStage.show();   
-        } catch (IOException ex) {
-            System.err.println(ex);
-        };
+                    showDashboard();
                      ;break;
                 default:break ;        
             }
@@ -203,10 +611,10 @@ public class LoginController implements Initializable {
         
     @FXML
         public void Save(ActionEvent event){
-        
+         
         System.err.println("Sauvegarde dans la base");
-        String temail= emaill.getText();
-        String tpassword= passwordd.getText();
+        String temail= email.getText();
+        String tpassword= password.getText();
         String tnom= nom.getText();
         String tprenom= prenom.getText();
         String ttelephone= telephone.getText();
@@ -234,7 +642,7 @@ public class LoginController implements Initializable {
         }
 }
   
-       public void UpdateTable (){
+       public void UpdateTable(){
         
         
         try {
@@ -242,13 +650,13 @@ public class LoginController implements Initializable {
             String requete = "SELECT * FROM `formation` order by id desc";
             PreparedStatement pst = cnx.prepareStatement(requete);
             ResultSet rs = pst.executeQuery();
-             ObservableList<Formation> liste = FXCollections.observableArrayList();
+            
             while (rs.next()) {
                
-            liste.add(new Formation(rs.getInt("id"),rs.getString("titre"))); 
+            ff.add(rs.getString("titre")); 
             
             }
-       formation.setItems(liste);
+       formation.setItems(ff);
             
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -265,7 +673,7 @@ public class LoginController implements Initializable {
             
           
             String req = "SELECT * FROM utilisateur WHERE email=?";
-            String temail= emaill.getText();
+            String temail= email.getText();
             PreparedStatement pst = cnx.prepareStatement(req);
             pst.setString(1, temail);
             ResultSet rs = pst.executeQuery();
@@ -275,14 +683,13 @@ public class LoginController implements Initializable {
            String requete = "INSERT INTO inscription(utilisateur_id,formation_id,date_inscrit) VALUES (?,?,?)";
              pst= cnx.prepareStatement(requete);
             pst.setInt(1,selectUti);
-            pst.setInt(2, this.selectedFor);
+            pst.setInt(2,selectedFor);
            long millis=System.currentTimeMillis();
            java.sql.Date date=new java.sql.Date(millis);
             pst.setDate(3, date);
             pst.execute();
-           
-
             JOptionPane.showMessageDialog(null, "Update");
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
@@ -291,14 +698,357 @@ public class LoginController implements Initializable {
      @FXML
     private void getFor(MouseEvent event) {
         
-        Formation F = formation.getSelectionModel().getSelectedItem();
-       
-        if (formation.getValue()!=null){
-             System.out.println(F.getTitre());
-        this.selectedFor = F.getId(); 
+        String s = formation.getSelectionModel().getSelectedItem();
+            try {
+                 String req = "SELECT * FROM `formation` WHERE titre=?";
+            pst = cnx.prepareStatement(req);
+                pst.setString(1, s);
+                rs = pst.executeQuery();
+             while (rs.next()) {
+            selectedFor=rs.getInt("id");
+             }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+            }
     
+   
+    public void UpdateTablee(){
+        
+        
+        try {
+            cnx = Connexion.getInstance().getConnection();
+            String requete = "SELECT * FROM utilisateur WHERE role='ROLE_FORMATEUR' order by id desc";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+               
+            formateur.getItems().add(rs.getString("nom")); 
+            }
+       
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
-}
+        
+      @FXML
+    private void SaveAvis() {
+
+        try {
+            cnx = Connexion.getInstance().getConnection();
+            
+          
+            String req = "SELECT * FROM utilisateur WHERE email=?";
+            String temail= email.getText();
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, temail);
+            ResultSet rs = pst.executeQuery();
+             while (rs.next()) {
+            selectUti=rs.getInt("id");
+             }
+           String requete = "INSERT INTO avis(formateur_id,apprenant_id,note) VALUES (?,?,?)";
+             pst= cnx.prepareStatement(requete);
+            pst.setInt(1,selectedFormateur);
+            pst.setInt(2,selectUti);
+            if(hangry.isVisible()){
+               pst.setInt(3, 1);
+               pst.execute();
+            JOptionPane.showMessageDialog(null, "Update");
+            }else if(hnothappy.isVisible()){
+                pst.setInt(3, 2); 
+                pst.execute();
+            JOptionPane.showMessageDialog(null, "Update");
+            }else if(hhappy.isVisible()){
+                pst.setInt(3, 3); 
+                pst.execute();
+            JOptionPane.showMessageDialog(null, "Update");
+            }
+          
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
+        }
+    } 
+    
+    @FXML
+    private void getFormateur(MouseEvent event) {
+        
+        String s = formateur.getSelectionModel().getSelectedItem();
+            try {
+                 String req = "SELECT * FROM `utilisateur` WHERE nom=?";
+            pst = cnx.prepareStatement(req);
+                pst.setString(1, s);
+                rs = pst.executeQuery();
+             while (rs.next()) {
+            selectedFormateur=rs.getInt("id");
+             }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+    
+    
+    @FXML
+    private void Update() {
+
+        try {
+            cnx = Connexion.getInstance().getConnection();
+            String value1 = id.getText();
+            String value2 = email.getText();
+            String value3 = password.getText();
+            String value4 = nom.getText();
+            String value5=prenom.getText();
+            String value6=telephone.getText();
+            String value7=adresse.getText();
+            String value8=date_naissance.getEditor().getText();
+
+            String requete = "update utilisateur set email= '"+value2+"',password= '"+value3+"' ,nom= '"+value4+"',prenom= '"+value5+"' ,telephone= '"+value6+"' ,adresse= '"+value7+"',date_naissance= '"+value8+"' where id= '"+value1+"' ";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.execute();
+            UpdateTable ();
+       
+
+            JOptionPane.showMessageDialog(null, "modifier");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
+        }
+    }
+   public void UpdateTableApprenant(){
+        
+        data.clear();
+        try {
+            cnx = Connexion.getInstance().getConnection();
+            String requete = "SELECT * FROM utilisateur WHERE role='ROLE_APPRENANT' order by id desc";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                data.add(new Utilisateur(rs.getInt("id"), rs.getString("email"), rs.getString("password"), rs.getString("nom"),rs.getString("prenom"),rs.getString("telephone"),rs.getString("adresse"),rs.getDate("date_naissance")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+       
+        colemail.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("email"));
+        colnom.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("nom"));
+        colprenom.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("prenom"));
+        coltelephone.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("telephone"));
+        coladresse.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("adresse"));
+        coldate_naissance.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("date_naissance"));
+        tvapprenant.setItems(data);
+    }
+    
+    void search(){ 
+     
+     
+        colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colprenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        coltelephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        tvapprenant.setItems(data);
+             FilteredList<Utilisateur> filteredData = new FilteredList<>(data, b -> true);
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(U -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (U.getNom().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getPrenom().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getTelephone().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                else {
+                    return false; // Does not match.
+                }
+            });
+        });
+        SortedList<Utilisateur> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tvapprenant.comparatorProperty());
+        tvapprenant.setItems(sortedData);    
+    }
+    public void UpdateTableFormateur(){
+        
+        data1.clear();
+        try {
+            cnx = Connexion.getInstance().getConnection();
+            String requete = "SELECT * FROM utilisateur WHERE role='ROLE_FORMATEUR' order by id desc";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                data1.add(new Utilisateur(rs.getInt("id"), rs.getString("email"), rs.getString("password"), rs.getString("nom"),rs.getString("prenom"),rs.getString("telephone"),rs.getString("adresse"),rs.getDate("date_naissance")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+       
+        cid1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colemail1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("email"));
+        colpassword1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("password"));
+        colnom1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("nom"));
+        colprenom1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("prenom"));
+        coltelephone1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("telephone"));
+        coladresse1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("adresse"));
+        coldate_naissance1.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("date_naissance"));
+         
+         
+         //add cell of button edit 
+         Callback<TableColumn<Utilisateur, String>, TableCell<Utilisateur, String>> cellFoctory = (TableColumn<Utilisateur, String> param) -> {
+            // make cell containing buttons
+            final TableCell<Utilisateur, String> cell = new TableCell<Utilisateur, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    //that cell created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+
+                    } else {
+
+                        FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+                        FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
+
+                        deleteIcon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#ff1744;"
+                        );
+                        editIcon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#00E676;"
+                        );
+                        
+                      
+                        deleteIcon.setOnMouseClicked((MouseEvent event) -> {
+                            
+                            Utilisateur u = tvformateur.getSelectionModel().getSelectedItem();
+                            ServiceUtilisateur su = new ServiceUtilisateur();
+                            su.supprimer(u);
+                            UpdateTableFormateur();
+                            
+                           
+
+                          
+
+                        });
+                        editIcon.setOnMouseClicked((MouseEvent event) -> {
+                            
+                            Utilisateur u= tvformateur.getSelectionModel().getSelectedItem();
+                            FXMLLoader loader = new FXMLLoader ();
+                            loader.setLocation(getClass().getResource("add.fxml"));
+                            try {
+                                loader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            AddController addController = loader.getController();
+                            addController.setUpdate(true);
+                            addController.setTextField(u.getId(), u.getEmail(), u.getPassword(), u.getNom(), u.getPrenom(), u.getTelephone(), u.getAdresse(), u.getDate_naissance());
+                            Parent parent = loader.getRoot();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                            
+
+                           
+
+                        });
+
+                        HBox managebtn = new HBox(editIcon, deleteIcon);
+                        managebtn.setStyle("-fx-alignment:center");
+                        HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
+                        HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
+
+                        setGraphic(managebtn);
+
+                        setText(null);
+
+
+                    }
+                }
+
+            };
+
+            return cell;
+        };
+         colaction.setCellFactory(cellFoctory);
+         tvformateur.setItems(data1);
+         
+         
+    }
+         
+      @FXML
+    private void getAddView(MouseEvent event) {
+        try {
+             
+                Parent root =FXMLLoader.load(getClass().getResource("Add.fxml"));
+                Stage mainStage = new Stage();
+                Scene scene = new Scene(root);
+                mainStage.setScene(scene);
+                mainStage.show();
+             
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+        
+    }   
+        
+        void search1(){ 
+     
+     
+       cid1.setCellValueFactory(new PropertyValueFactory<>("id")); 
+       colemail1.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colnom1.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colprenom1.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        coltelephone1.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        tvformateur.setItems(data1);
+             FilteredList<Utilisateur> filteredData = new FilteredList<>(data1, b -> true);
+        search1.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(U -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (U.getNom().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getPrenom().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                if (U.getTelephone().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } 
+                else {
+                    return false; // Does not match.
+                }
+            });
+        });
+        SortedList<Utilisateur> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tvformateur.comparatorProperty());
+        tvformateur.setItems(sortedData);    
+    }
+        
+
+    }
+
+    
+    
+

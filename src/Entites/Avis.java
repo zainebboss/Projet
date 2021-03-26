@@ -13,8 +13,8 @@ package Entites;
  */
 public class Avis {
     private int id;
-    private int id_formateur;
-    private int id_apprenant;
+    private int formateur_id;
+    private int apprenant_id;
     private int note;
 
     public Avis() {
@@ -24,12 +24,12 @@ public class Avis {
         return id;
     }
 
-    public int getId_formateur() {
-        return id_formateur;
+    public int Getformateur_id() {
+        return formateur_id;
     }
 
-    public int getId_apprenant() {
-        return id_apprenant;
+    public int Getapprenant_id() {
+        return apprenant_id;
     }
 
     public int getNote() {
@@ -40,12 +40,12 @@ public class Avis {
         this.id = id;
     }
 
-    public void setId_formateur(int id_formateur) {
-        this.id_formateur = id_formateur;
+    public void setId_formateur(int formateur_id) {
+        this.formateur_id = apprenant_id;
     }
 
-    public void setId_apprenant(int id_apprenant) {
-        this.id_apprenant = id_apprenant;
+    public void setId_apprenant(int apprenant_id) {
+        this.apprenant_id = apprenant_id;
     }
 
     public void setNote(int note) {
@@ -54,7 +54,7 @@ public class Avis {
 
     @Override
     public String toString() {
-        return "Avis{" + "id=" + id + ", id_formateur=" + id_formateur + ", id_apprenant=" + id_apprenant + ", note=" + note + '}';
+        return "Avis{" + "id=" + id + ", id_formateur=" + apprenant_id + ", id_apprenant=" + apprenant_id + ", note=" + note + '}';
     }
     
     

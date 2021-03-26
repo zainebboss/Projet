@@ -1,3 +1,7 @@
 .btns:hover{
     -fx-background-color:   #2b76a4;
 }
+.menubar:hover{
+    -fx-border-color:  #2b76a4;
+    -fx-border-width: 0px 0px 3px 0px; 
+}

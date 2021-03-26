@@ -33,7 +33,7 @@ public class SendMailJava {
             properties.put("mail.smtp.port", "587");
 
             String myAccountEmail = "zaineb.boussaid@esprit.tn";
-            String myAccountPwd = "Zaineb26320375";
+            String myAccountPwd = "";
             Session session = Session.getInstance(properties, new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(myAccountEmail, myAccountPwd);

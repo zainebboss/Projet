@@ -42,7 +42,7 @@
       </HBox>
       <HBox fx:id="hangry" prefHeight="103.0" prefWidth="600.0" visible="false" AnchorPane.topAnchor="162.0">
          <children>
-            <ImageView fitHeight="100.0" fitWidth="180.0" onContextMenuRequested="#showHboxangry" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="100.0" fitWidth="180.0" onMouseClicked="#showHboxangry" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="50.0" right="50.0" />
                </HBox.margin>

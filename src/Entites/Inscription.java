@@ -14,18 +14,18 @@ import java.sql.PreparedStatement;
  */
 public class Inscription {
     private int id;
-    private int id_utilisateur;
-    private int id_formation;
+    private int utilisateur_id;
+    private int formation_id;
     private Date date_inscrit;
     
 
     public Inscription() {
     }
 
-    public Inscription(int id, int id_utilisateur, int id_formation, Date date_inscrit) {
+    public Inscription(int id, int utilisateur_id, int formation_id, Date date_inscrit) {
         this.id = id;
-        this.id_utilisateur = id_utilisateur;
-        this.id_formation = id_formation;
+        this.utilisateur_id = utilisateur_id;
+        this.formation_id = formation_id;
         this.date_inscrit = date_inscrit;
     }
 
@@ -34,11 +34,11 @@ public class Inscription {
     }
 
     public int getId_utilisateur() {
-        return id_utilisateur;
+        return utilisateur_id;
     }
 
     public int getId_formation() {
-        return id_formation;
+        return formation_id;
     }
 
     public Date getDate_inscrit() {
@@ -49,12 +49,12 @@ public class Inscription {
         this.id = id;
     }
 
-    public void setId_utilisateur(int id_utilisateur) {
-        this.id_utilisateur = id_utilisateur;
+    public void setId_utilisateur(int utilisateur_id) {
+        this.utilisateur_id = utilisateur_id;
     }
 
-    public void setId_formation(int id_formation) {
-        this.id_formation = id_formation;
+    public void setId_formation(int formation_id) {
+        this.formation_id = formation_id;
     }
 
     public void setDate_inscrit(Date date_inscrit) {
@@ -63,7 +63,7 @@ public class Inscription {
 
     @Override
     public String toString() {
-        return "Inscription{" + "id=" + id + ", id_utilisateur=" + id_utilisateur + ", id_formation=" + id_formation + ", date_inscrit=" + date_inscrit + '}';
+        return "Inscription{" + "id=" + id + ", id_utilisateur=" + utilisateur_id + ", id_formation=" + formation_id + ", date_inscrit=" + date_inscrit + '}';
     }
     
     

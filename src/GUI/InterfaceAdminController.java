@@ -349,13 +349,14 @@ public class InterfaceAdminController implements Initializable {
         boolean result = uc.getByEmail(u);
          UpdateTable1 ();
          search1();
-         id.setText("");
-        email.setText("");
-        password.setText("");
-        nom.setText("");
-        prenom.setText("");
-        telephone.setText("");
-        adresse.setText("");
+         id.clear();
+        email.clear();
+        password.clear();
+        nom.clear();
+        prenom.clear();
+        adresse.clear();
+        
+       
         if (result){
              JOptionPane.showMessageDialog(null, "votre inscription ajouter avec succes");
         }
