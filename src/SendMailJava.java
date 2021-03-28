@@ -1,10 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Services;
-
+///*
+// * To change this license header, choose License Headers in Project Properties.
+// * To change this template file, choose Tools | Templates
+// * and open the template in the editor.
+// */
+//package Services;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,10 +19,11 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author Hp Omen
+ * @author Oussema
  */
 public class SendMailJava {
-  public static void sendMail(String recepient, String objet, String texte) {
+
+    public static void sendMail(String recepient, String objet, String texte) {
         try {
             System.out.println("Preparing message sending");
             Properties properties = new Properties();
@@ -64,5 +64,6 @@ public class SendMailJava {
         }
         return null;
 
-    }  
+    }
+
 }

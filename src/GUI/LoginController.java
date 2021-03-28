@@ -8,8 +8,11 @@ package GUI;
 import Entites.Formation;
 import Entites.Inscription;
 import Entites.Utilisateur;
+import Entites.sparkAide;
+import Entites.sparkAideCom;
 import Services.SendMailJava;
 import Services.ServiceUtilisateur;
+import Services.mysqlConnect;
 import Utils.Connexion;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -45,17 +48,29 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
@@ -92,11 +107,16 @@ public class LoginController implements Initializable {
      @FXML
      private AnchorPane acceuil;
      @FXML
+     private AnchorPane AideCom;
+     @FXML
      private AnchorPane paneInscription;
      @FXML
      private AnchorPane paneFormation;
+     
      @FXML
-     private AnchorPane menu;
+     private AnchorPane page;
+     @FXML
+     private AnchorPane aide;
      
      @FXML
      private AnchorPane avis;
@@ -135,8 +155,10 @@ public class LoginController implements Initializable {
     private VBox dashboard;
      @FXML
     private VBox apprenant;
-      @FXML
+    @FXML
     private VBox listeFormateur;
+    @FXML
+    private VBox listeAvis;
     @FXML
     private ComboBox <String>formateur;
      @FXML
@@ -176,15 +198,25 @@ public class LoginController implements Initializable {
     private TableColumn<Utilisateur, String> coldate_naissance1;
     @FXML
     private TableColumn<Utilisateur, String> colaction;
+    @FXML
+    private TableView tvavis;
+    @FXML
+    private TableColumn colemailavis;
+    @FXML
+    private TableColumn colnomavis;
+    @FXML
+    private TableColumn colprenomavis;
+    @FXML
+    private TableColumn colavis;
+    
  
     private int selectUti;
     private int selectedFor ;
     private int selectedFormateur;
     
-    ObservableList<Utilisateur> dataa = FXCollections.observableArrayList();
+    ObservableList<ObservableList> liste ;
     ObservableList<Utilisateur> data = FXCollections.observableArrayList();
     ObservableList<Utilisateur> data1 = FXCollections.observableArrayList();
-    ObservableList<Formation> liste = FXCollections.observableArrayList();
     ObservableList <String> ff = FXCollections.observableArrayList();
    
      
@@ -205,10 +237,13 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         UpdateTable();
         UpdateTablee();
+        UpdateTableAvis();
         UpdateTableApprenant();
         UpdateTableFormateur();
         search();
         search1();
+        UpdateTables() ;
+         search_aide();
         
         //liste Java
         try {
@@ -314,13 +349,15 @@ public class LoginController implements Initializable {
         paneInscription.setVisible(true);
         paneFormation.setVisible(false);
         acceuil.setVisible(false);
-        menu.setVisible(false);
         hmenu.setVisible(false);
         menuadmin.setVisible(false);
         dashboard.setVisible(false);
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
         menuformateur.setVisible(false);
+        listeAvis.setVisible(false);
+        aide.setVisible(false);
+        AideCom.setVisible(false);
         
     }
     @FXML
@@ -340,13 +377,15 @@ public class LoginController implements Initializable {
         paneInscription.setVisible(true);
         paneFormation.setVisible(false);
         acceuil.setVisible(false);
-        menu.setVisible(false);
         hmenu.setVisible(false);
         menuadmin.setVisible(false);
         dashboard.setVisible(false);
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
         
     }
     @FXML
@@ -362,6 +401,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
     }
     @FXML
     public void showDashboard(){
@@ -376,6 +418,26 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
+    }
+    @FXML
+    public void showAide(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(true);
+        menuadmin.setVisible(true);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(true);
+         AideCom.setVisible(false);
     }
     @FXML
     public void showDashboardFormateur(){
@@ -390,6 +452,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(true);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
     }
      @FXML
     public void showmenuaFormateur(){
@@ -404,6 +469,26 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(true);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
+    }
+     @FXML
+    public void showAideCom(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(true);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(true);
     }
      @FXML
     public void showmenu(){
@@ -412,14 +497,17 @@ public class LoginController implements Initializable {
         paneFormation.setVisible(false);
         box.setVisible(false);
          avis.setVisible(false);
-         menu.setVisible(true);
          acceuil.setVisible(false);
-         hmenu.setVisible(false);
+         hmenu.setVisible(true);
          menuadmin.setVisible(false);
          dashboard.setVisible(false);
          apprenant.setVisible(false);
          listeFormateur.setVisible(false);
           menuformateur.setVisible(false);
+          listeAvis.setVisible(false);
+          aide.setVisible(false);
+          AideCom.setVisible(false);
+          
     }
     @FXML
     
@@ -429,14 +517,16 @@ public class LoginController implements Initializable {
         paneFormation.setVisible(false);
         box.setVisible(false);
          avis.setVisible(true);
-         menu.setVisible(false);
          acceuil.setVisible(false);
-         hmenu.setVisible(false);
+         hmenu.setVisible(true);
          menuadmin.setVisible(false);
          dashboard.setVisible(false);
          apprenant.setVisible(false);
          listeFormateur.setVisible(false);
           menuformateur.setVisible(false);
+          listeAvis.setVisible(false);
+          aide.setVisible(false);
+          AideCom.setVisible(false);
     }
     @FXML
     public void showprofil() throws SQLException{
@@ -470,13 +560,15 @@ public class LoginController implements Initializable {
         paneInscription.setVisible(true);
         paneFormation.setVisible(false);
         acceuil.setVisible(false);
-        menu.setVisible(false);
         hmenu.setVisible(true);
         avis.setVisible(false);
         menuadmin.setVisible(false);
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
   
     }
          @FXML
@@ -494,6 +586,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
         
     }
     @FXML
@@ -511,6 +606,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
        
     }
     @FXML
@@ -528,6 +626,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
         
     }
     @FXML
@@ -543,6 +644,26 @@ public class LoginController implements Initializable {
         apprenant.setVisible(true);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
+    }
+     @FXML
+    public void showlisteAvis(){
+        
+        paneInscription.setVisible(false);
+        paneFormation.setVisible(false);
+        box.setVisible(false);
+        acceuil.setVisible(false);
+        hmenu.setVisible(false);
+        menuadmin.setVisible(false);
+        dashboard.setVisible(false);
+        apprenant.setVisible(false);
+        listeFormateur.setVisible(false);
+         menuformateur.setVisible(true);
+         listeAvis.setVisible(true);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
     }
     @FXML
     public void showlisteApprenantFormateur(){
@@ -557,6 +678,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(true);
         listeFormateur.setVisible(false);
          menuformateur.setVisible(true);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
     }
      @FXML
     public void showlisteFormateur(){
@@ -571,6 +695,9 @@ public class LoginController implements Initializable {
         apprenant.setVisible(false);
         listeFormateur.setVisible(true);
          menuformateur.setVisible(false);
+         listeAvis.setVisible(false);
+         aide.setVisible(false);
+         AideCom.setVisible(false);
     }
     
    
@@ -1045,10 +1172,452 @@ public class LoginController implements Initializable {
         sortedData.comparatorProperty().bind(tvformateur.comparatorProperty());
         tvformateur.setItems(sortedData);    
     }
-        
+         @FXML
+    private void print(MouseEvent event) {
+     Printer printer = Printer.getDefaultPrinter();
 
+        // Print page layout object.
+        // Set "LANDSCAPE" as the page orientation for the convenience for the test.
+        //   If the output pdf has the text information, the output file is shown in a PORTRAIT mode.
+        //   If not, it will be shown in a LANDSCAPE mode.
+        PageLayout layout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+
+        // Create a printer job.
+        PrinterJob  job = PrinterJob.createPrinterJob();
+
+        if (job != null) {
+            // Set the job name.
+            job.getJobSettings().setJobName("SOLUTION");
+
+            if (job.showPrintDialog(this.page.getScene().getWindow())) {
+                // Print out the specified pane.
+                job.printPage(layout, this.tvformateur);
+                
+            }
+            else {
+                System.out.println("Print canceled.");
+            }
+
+            // Finish the print job.
+            job.endJob();
+        }
     }
 
     
+
+
+
+
+private void UpdateTableAvis() {
+        tvavis.getColumns().clear();
+          
+          liste = FXCollections.observableArrayList();
+          try{
+            cnx = Connexion.getInstance().getConnection();
+            //sql string ifademiz. 
+            String req = "SELECT * FROM utilisateur WHERE email=?";
+            String temail= email.getText();
+            PreparedStatement pst = cnx.prepareStatement(req);
+            pst.setString(1, temail);
+            ResultSet rs1 = pst.executeQuery();
+             while (rs1.next()) {
+            selectUti=rs1.getInt("id");
+             }
+             
+            String SQL = "SELECT DISTINCT u.email,u.nom,u.prenom,a.note FROM utilisateur u JOIN avis a ON u.id=a.apprenant_id ";//
+           //pst.setInt(1, selectUti);
+           
+            ResultSet rs = cnx.createStatement().executeQuery(SQL);
+            for(int i=0 ; i<rs.getMetaData().getColumnCount(); i++){
+                final int j = i;                
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i+1));
+                col.setStyle("-fx-pref-width:250px;");
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){                    
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {                                                                                              
+                        return new SimpleStringProperty(param.getValue().get(j).toString());                        
+                    }                    
+                });
+                 colemail.setCellValueFactory(new PropertyValueFactory<Utilisateur, String>("email"));
+               
+                tvavis.getColumns().addAll(col); 
+                System.out.println("Column ["+i+"] ");
+            }
+
+            
+            while(rs.next()){
+                
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+                    
+                    row.add(rs.getString(i));
+                }
+                System.out.println(row);
+                liste.add(row);
+            }
+
+            
+            tvavis.setItems(liste);
+          }catch(Exception e){
+              e.printStackTrace();
+              System.out.println(e);             
+          }
+    }
+    ////nidhal
+     @FXML
+    private TableView<sparkAide> table_aide ;
+
+    @FXML
+    private TableColumn<sparkAide, String> col_sujet;
+
+    @FXML
+    private TableColumn<sparkAide, String> col_probleme;
+    
+    @FXML
+    private TextField text_s;
+
+    @FXML
+    private TextField text_p;
+
+    @FXML
+    private TextField filterAide;
+    ObservableList<sparkAide> listM;
+    ObservableList<sparkAide> dataList;
+ 
+    
+ int index = -1;
+ 
+    @FXML
+    private WebView ViewWeb;
+    @FXML
+    private TextField text_mail;
+    @FXML
+    private TableColumn<sparkAide, String> col_mail;
+
+    @FXML
+    public void addaide (){
+     cnx=mysqlConnect.Connectdb() ;
+     String sql="insert into aide (sujet,probleme,mail)values(?,?,?)" ;
+ try{
+     pst =cnx.prepareStatement(sql);
+     pst.setString(1,text_s.getText());
+     pst.setString(2,text_p.getText());
+     pst.setString(3,text_mail.getText());
+     pst.execute();
+    JOptionPane.showMessageDialog(null,"aide add succes ");
+     UpdateTable ();
+     search_aide();
+ }catch(Exception e){
+     JOptionPane.showMessageDialog(null,e);
+ }
+ 
+ }
+ 
+    @FXML
+    void getSelected (){
+   
+    index= table_aide.getSelectionModel().getSelectedIndex();
+   if (index  <= -1){
+        return ;
+  }
+     text_s.setText(col_sujet.getCellData(index).toString()) ;
+     text_p.setText(col_probleme.getCellData(index).toString());
+     text_mail.setText(col_mail.getCellData(index).toString());
+}
+    
+    @FXML
+    public void Edit (){   
+        try {
+           cnx = mysqlConnect.Connectdb();
+            String value1 = text_s.getText();
+            String value2 = text_p.getText();
+            String value3 = text_mail.getText();
+          
+            String sql = "update aide set sujet= '"+value1+"',probleme= '"+value2+"',mail= '"+value3+"' where sujet= '"+value1+"' ";
+            pst= cnx.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Update");
+
+           UpdateTable ();
+           search_aide();
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+    }
+    @FXML
+        public void Delete(){
+    cnx = mysqlConnect.Connectdb();
+    String sql = "delete from aide where sujet= ?";
+        try {
+            pst = cnx.prepareStatement(sql);
+            pst.setString(1, text_s.getText());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Delete");
+            UpdateTable() ;
+            search_aide();
+  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    }
+    
+    public void UpdateTables (){
+        
+        col_sujet.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("sujet")  );
+        col_probleme.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("probleme")  );
+        col_mail.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("mail")  );
+        
+         listM = mysqlConnect.getDatasparkAide() ;
+         table_aide.setItems(listM);
+    }
+ 
+     void search_aide() {          
+        col_sujet.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("sujet"));
+        col_probleme.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("probleme"));
+    
+        
+        dataList = mysqlConnect.getDatasparkAide() ;  
+        table_aide.setItems(dataList);
+        FilteredList<sparkAide> filteredData = new FilteredList<>(dataList, b -> true);  
+      filterAide.textProperty().addListener((observable, oldValue, newValue) -> {
+      filteredData.setPredicate(personaide -> {
+    if (newValue == null || newValue.isEmpty()) {
+     return true;
+    }    
+    String lowerCaseFilter = newValue.toLowerCase();
+    
+    if (personaide.getSujet().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+     return true; // Filter matches sujet
+    } else if (personaide.getProbleme().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+     return true; // Filter matches probleme
+    }       
+         else  
+          return false; // Does not match.
+   });
+  });  
+  SortedList<sparkAide> sortedData = new SortedList<>(filteredData);  
+  sortedData.comparatorProperty().bind(table_aide.comparatorProperty());  
+  table_aide.setItems(sortedData);      
+    }
+    
     
 
+    
+
+   
+
+    @FXML
+    private void handleButtonAction(javafx.event.ActionEvent event) throws IOException {
+          System.out.println("You clicked me!");
+        Parent homepage = FXMLLoader.load(getClass().getResource("formateur.fxml"));
+        Scene homepageScene = new Scene(homepage);
+       Stage appStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+       appStage.setScene(homepageScene);
+       appStage.show();
+    }
+
+
+
+    @FXML
+    private void goGoogle(javafx.scene.input.MouseEvent event) {
+         final WebEngine web =ViewWeb.getEngine() ;
+        String urlweb ="https://www.google.com/";
+        web.load(urlweb);
+    }
+
+    @FXML
+    private void goYoutube(javafx.scene.input.MouseEvent event) {
+           final WebEngine webYouTube =ViewWeb.getEngine() ;
+        String urlweb ="https://www.youtube.com/";
+        webYouTube.load(urlweb);
+    }
+        @FXML
+    private TableView<sparkAide> table_aideF;
+  
+    @FXML
+    private TableColumn<sparkAide, String> col_sujetF;
+    
+    @FXML
+    private TableColumn<sparkAide, String> col_mailF;
+    
+    @FXML
+    private TableColumn<sparkAide, String> col_problemeF;
+    
+    @FXML
+    private TableView<sparkAideCom> table_com;
+    @FXML
+    private TextArea textF;
+    @FXML
+    private TableColumn<sparkAideCom, String> col_com;
+    
+    ObservableList<sparkAide> listee;
+    ObservableList<sparkAideCom> listmCom;
+   
+     
+     int selectedAide ;
+     int selectedCom ;
+    @FXML
+    private AnchorPane imageV;
+   
+    @FXML
+    private void addCom() {
+        
+     cnx=mysqlConnect.Connectdb() ;
+     String sql="insert into aidecom (commaintre,id_sujet) values(?,?)" ;
+   
+     
+     try{
+     
+     
+     pst =cnx.prepareStatement(sql);
+     pst.setString(1,textF.getText());
+     pst.setInt(2,this.selectedAide);
+     pst.execute();
+     
+    JOptionPane.showMessageDialog(null,"aidecom add succes ");
+     UpdateTablecom ();
+   
+ }catch(Exception e){
+     JOptionPane.showMessageDialog(null,e);
+ }
+    }
+    
+    
+      public void UpdateTablecom (){
+        
+        col_com.setCellValueFactory(new PropertyValueFactory<>("commaintre")  );
+        
+        
+         listmCom = mysqlConnect.getDatasparkAideCom(this.selectedAide) ;
+         
+         if (listmCom.size()!=0){
+             
+         table_com.setItems(listmCom);
+           
+         }
+         else {
+                      table_com.setItems(null);
+
+         } 
+    }
+      
+
+    @FXML
+    private void affichage() {
+        col_sujetF.setCellValueFactory(new PropertyValueFactory<>("sujet")  );
+        col_problemeF.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("probleme")  );
+        col_mailF.setCellValueFactory(new PropertyValueFactory<sparkAide,String>("mail")  );
+        
+        listee = mysqlConnect.getDatasparkAide() ;
+        table_aideF.setItems(listee);
+    }
+
+    @FXML
+    private void suppCOM(ActionEvent event) {
+          cnx = mysqlConnect.Connectdb();
+    String sql = "delete from aidecom where id= ?";
+        try {
+            pst = cnx.prepareStatement(sql);
+            pst.setInt(1, this.selectedCom);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Delete");
+            UpdateTablecom() ;
+           
+  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        
+    }
+
+    @FXML
+    private void getCom(MouseEvent event) {
+        
+     sparkAideCom com = table_com.getSelectionModel().getSelectedItem();
+        this.selectedCom = com.getId();   
+            
+     textF.setText(com.getCommaintre()) ;
+    
+    }
+     @FXML
+    public void EditCom (){   
+        try {
+           cnx = mysqlConnect.Connectdb();
+         
+
+            String sql = "update aidecom set commaintre= ? where id= ? ";
+            pst= cnx.prepareStatement(sql);
+            pst.setString(1,textF.getText() );
+            pst.setInt(2, this.selectedCom);
+
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Update");
+
+           UpdateTablecom ();
+          
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+    }
+
+    @FXML
+    private void getSubject(MouseEvent event) {
+       sparkAide com = table_aideF.getSelectionModel().getSelectedItem();
+        this.selectedAide = com.getId();   
+             UpdateTablecom ();
+    
+    }
+
+    @FXML
+    private void goMail(MouseEvent event) throws IOException {
+        
+            System.out.println("You clicked me!");
+        Parent homepage = FXMLLoader.load(getClass().getResource("Mailing.fxml"));
+        Scene homepageScene = new Scene(homepage);
+       Stage appStage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+       appStage.setScene(homepageScene);
+       appStage.show();
+    }
+
+  
+
+    @FXML
+    private void pdf() {
+     Printer printer = Printer.getDefaultPrinter();
+
+        // Print page layout object.
+        // Set "LANDSCAPE" as the page orientation for the convenience for the test.
+        //   If the output pdf has the text information, the output file is shown in a PORTRAIT mode.
+        //   If not, it will be shown in a LANDSCAPE mode.
+        PageLayout layout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+
+        // Create a printer job.
+        PrinterJob  job = PrinterJob.createPrinterJob();
+
+        if (job != null) {
+            // Set the job name.
+            job.getJobSettings().setJobName("SOLUTION");
+
+            if (job.showPrintDialog(this.page.getScene().getWindow())) {
+                // Print out the specified pane.
+                job.printPage(layout, this.table_com);
+                
+            }
+            else {
+                System.out.println("Print canceled.");
+            }
+
+            // Finish the print job.
+            job.endJob();
+        }
+    }
+
+
+    
+
+}

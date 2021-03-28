@@ -20,6 +20,14 @@ public class Avis {
     public Avis() {
     }
 
+    public Avis(int id, int formateur_id, int apprenant_id, int note) {
+        this.id = id;
+        this.formateur_id = formateur_id;
+        this.apprenant_id = apprenant_id;
+        this.note = note;
+    }
+    
+
     public int getId() {
         return id;
     }

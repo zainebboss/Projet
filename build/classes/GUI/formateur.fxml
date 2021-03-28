@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+
+<AnchorPane id="AnchorPane" fx:id="paneF" prefHeight="900.0" prefWidth="1000.0" style="-fx-background-color: #E6E6E6;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FormateurController">
+   <children>
+      <AnchorPane fx:id="imageV" layoutX="-8.0" prefHeight="802.0" prefWidth="195.0" style="-fx-background-color: #27A6F8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-8.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button layoutX="48.0" layoutY="48.0" mnemonicParsing="false" onAction="#affichage" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #F7F9F9;" text="consulter" />
+            <Button layoutX="48.0" layoutY="96.0" mnemonicParsing="false" onAction="#addCom" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color: #F7F9F9;" text="ajouter " textOverrun="WORD_ELLIPSIS" />
+            <Button layoutX="48.0" layoutY="136.0" mnemonicParsing="false" onAction="#suppCOM" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color: #F7F9F9;" text="supprimer" textOverrun="WORD_ELLIPSIS" />
+            <Button layoutX="48.0" layoutY="180.0" mnemonicParsing="false" onAction="#Edit" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color: #F7F9F9;" text="modifier" textOverrun="WORD_ELLIPSIS" />
+            <ImageView fitHeight="234.0" fitWidth="145.0" layoutX="26.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/pix_aide1.jpg" />
+               </image>
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="0.27450981736183167" green="0.5921568870544434" blue="0.9490196108818054" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="table_aideF" layoutX="218.0" layoutY="187.0" onMouseClicked="#getSubject" prefHeight="263.0" prefWidth="696.0">
+        <columns>
+          <TableColumn fx:id="col_sujetF" prefWidth="246.39996337890625" text="sujet" />
+          <TableColumn fx:id="col_problemeF" minWidth="0.0" prefWidth="227.19998168945312" text="probleme " />
+            <TableColumn fx:id="col_mailF" minWidth="0.0" prefWidth="227.19998168945312" text="e-mail" />
+        </columns>
+      </TableView>
+      <TextArea fx:id="textF" layoutX="216.0" layoutY="49.0" prefHeight="130.0" prefWidth="696.0" promptText="commaintre" />
+      <TableView fx:id="table_com" layoutX="218.0" layoutY="464.0" onMouseClicked="#getCom" prefHeight="198.0" prefWidth="696.0">
+        <columns>
+          <TableColumn fx:id="col_com" prefWidth="695.2000274658203" text="commaintre " />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="54.0" fitWidth="71.0" layoutX="841.0" layoutY="672.0" onMouseClicked="#goMail" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/gmail.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="41.0" fitWidth="71.0" layoutX="754.0" layoutY="672.0" onMouseClicked="#pdf" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/pdf.jpg" />
+         </image>
+      </ImageView>
+   </children>
+   <effect>
+      <InnerShadow>
+         <color>
+            <Color red="0.272599995136261" green="0.6139933466911316" blue="0.9399999976158142" />
+         </color>
+      </InnerShadow>
+   </effect>
+</AnchorPane>
