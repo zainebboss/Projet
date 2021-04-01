@@ -6,6 +6,7 @@
 package Test;
 import Entites.Utilisateur;
 import Services.MetierUtilisateur;
+import Services.SendMailJava;
 import Services.ServiceUtilisateur;
 import java.sql.*;
 import java.util.List;
@@ -58,8 +59,9 @@ static ResultSet result;
       ser.supprimer(p1);
        
        //ser.modifier(p1);
-       //met.encrypt("zaineb");
+       met.encrypt("admin");
        //met.decrypt("@QCCG_BT");
+       //SendMailJava.sendMail("zaineb.boussaid@esprit.tn","WELCOME TO GRANDMA","Félicitations, vous êtes inscrit");
        
        
         }

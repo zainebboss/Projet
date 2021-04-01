@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/AuthFacebook.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/OAuthAuthenticator.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/ExcelMailAPI.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/GUI/Login.fxml</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/OAuthFacebookAuthenticator.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/GUI/LoginController.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Test/test.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/MetierUtilisateur.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/GUI/AddController.java</file>
+            <file>file:/C:/Users/Hp%20Omen/Documents/NetBeansProjects/E_Formation/src/Services/ServiceUtilisateur.java</file>
+        </group>
     </open-files>
 </project-private>

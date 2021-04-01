@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="493.0" prefWidth="579.0" style="-fx-background-color: #27A6F8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DetailController">
+   <children>
+      <AnchorPane prefHeight="497.0" prefWidth="579.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <ImageView fitHeight="474.0" fitWidth="495.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../livre.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="177.0" layoutY="50.0" prefHeight="36.0" prefWidth="242.0" text="detail des cours" textFill="#1e1d1d">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="129.0" layoutY="176.0" text="Fichier" />
+            <Label layoutX="135.0" layoutY="121.0" text="Titre" />
+            <TextField fx:id="tfTitre" editable="false" layoutX="215.0" layoutY="121.0" />
+            <TextField fx:id="tfFicher" editable="false" layoutX="215.0" layoutY="172.0" />
+            <Label layoutX="121.0" layoutY="235.0" text="Categorie" />
+            <TextField fx:id="tfCategorie" editable="false" layoutX="215.0" layoutY="231.0" />
+            <Button fx:id="btn_back" layoutX="431.0" layoutY="443.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: #27A6F8;" text="Back" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

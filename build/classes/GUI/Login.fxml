@@ -2,11 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,13 +25,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
 <AnchorPane fx:id="page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1370.0" style="-fx-background-color: #DCDCDC;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
-      <AnchorPane fx:id="acceuil" layoutX="-57.0" prefHeight="700.0" prefWidth="1370.0">
+      <AnchorPane fx:id="acceuil" layoutX="-1.0" prefHeight="700.0" prefWidth="1361.0">
          <children>
-            <AnchorPane prefHeight="100.0" prefWidth="1426.0" style="-fx-background-color: #2b76a4;" AnchorPane.topAnchor="0.0">
+            <AnchorPane prefHeight="100.0" prefWidth="1370.0" style="-fx-background-color: #2b76a4;" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="771.0" layoutY="14.0" text="FORMATION À DISTANCE," textFill="#27a3eb">
                      <font>
@@ -90,6 +97,61 @@
             </Button>
          </children>
       </HBox>
+      <HBox fx:id="hmenu" prefHeight="49.0" prefWidth="1370.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#showprofil" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Profil">
+               <HBox.margin>
+                  <Insets left="150.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#showListeCourApp" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Cour">
+               <HBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#showinit" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Avis">
+               <HBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#showAide" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Aide">
+               <HBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/user.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="420.0" top="4.0" />
+               </HBox.margin>
+            </ImageView>
+            <Button mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #ffffff;" text="Déconnexion">
+               <HBox.margin>
+                  <Insets left="5.0" top="12.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
       <AnchorPane fx:id="paneInscription" layoutX="-2.0" layoutY="174.0" prefHeight="533.0" prefWidth="1373.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-1.0">
          <children>
             <TextField fx:id="id" layoutX="351.0" layoutY="86.0" prefHeight="8.0" prefWidth="8.0" />
@@ -99,7 +161,7 @@
             <TextField fx:id="adresse" layoutX="351.0" layoutY="310.0" prefHeight="40.0" prefWidth="700.0" promptText="Adresse" />
             <TextField fx:id="nom" layoutX="351.0" layoutY="138.0" prefHeight="40.0" prefWidth="700.0" promptText="Nom" />
             <PasswordField fx:id="password" layoutX="351.0" layoutY="82.0" prefHeight="40.0" prefWidth="700.0" promptText="Password" />
-            <Button fx:id="inscrire" layoutX="418.0" layoutY="452.0" mnemonicParsing="false" onAction="#Save" onMouseClicked="#showPaneFormation" prefHeight="51.0" prefWidth="567.0" style="-fx-background-color: #2b76a4;" text="S'inscrire" textFill="WHITE" visible="false">
+            <Button fx:id="inscrire" layoutX="418.0" layoutY="452.0" mnemonicParsing="false" onAction="#Save" prefHeight="51.0" prefWidth="567.0" style="-fx-background-color: #2b76a4;" text="S'inscrire" textFill="WHITE" visible="false">
                <font>
                   <Font name="Times New Roman Bold" size="28.0" />
                </font>
@@ -119,7 +181,7 @@
       </AnchorPane>
       <AnchorPane id="AnchorPane" fx:id="paneFormation" layoutX="-7.0" opacity="0.78" prefHeight="700.0" prefWidth="1379.0" stylesheets="@FichierCss.css" visible="false">
          <children>
-            <AnchorPane prefHeight="103.0" prefWidth="1379.0" style="-fx-background-color: #2b76a4;">
+            <AnchorPane prefHeight="103.0" prefWidth="1379.0" style="-fx-background-color: #072671;">
                <children>
                   <Label layoutX="237.0" layoutY="10.0" text="FORMATION À DISTANCE," textFill="#27a3eb">
                      <font>
@@ -140,13 +202,18 @@
                         <Image url="@../Image/ys-elearning-pe-1.jpg" />
                      </image>
                   </ImageView>
-                  <ComboBox fx:id="formation" layoutX="372.0" layoutY="201.0" onMouseClicked="#getFor" prefHeight="34.0" prefWidth="278.0" promptText="Choissiser votre formation*" style="-fx-background-color: #FFFFFF;" />
+                  <ComboBox fx:id="formation" layoutX="346.0" layoutY="201.0" prefHeight="34.0" prefWidth="304.0" promptText="Choissiser votre formation*" style="-fx-background-color: #FFFFFF;" />
                   <Label layoutX="381.0" layoutY="153.0" prefHeight="27.0" prefWidth="278.0" text="Quel domaine vous intéresse ?" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btn" layoutX="450.0" layoutY="256.0" mnemonicParsing="false" onAction="#SaveFormation" onMouseClicked="#showmenu" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #072671;" text="SUIVANT" textFill="WHITE">
+                  <Button fx:id="btn" layoutX="505.0" layoutY="256.0" mnemonicParsing="false" onAction="#SaveFormation" onMouseClicked="#showmenu" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #072671;" text="SUIVANT" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn1" layoutX="351.0" layoutY="256.0" mnemonicParsing="false" onAction="#showPaneInscription" onMouseClicked="#showmenu" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #072671;" text="PRÉCÉDENT" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -167,6 +234,61 @@
       </AnchorPane>
       <AnchorPane id="AnchorPane" fx:id="avis" layoutY="2.0" prefHeight="567.0" prefWidth="798.0" visible="false">
          <children>
+            <HBox layoutY="-3.0" prefHeight="49.0" prefWidth="1370.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#showprofil" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Profil">
+                     <HBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#showListeCourApp" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Cour">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showinit" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Avis">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showAide" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Aide">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="420.0" top="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #ffffff;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" top="12.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
             <ComboBox fx:id="formateur" layoutX="725.0" layoutY="132.0" onMouseClicked="#getFormateur" prefHeight="36.0" prefWidth="414.0" promptText="Selectionner Formateur*" styleClass="changed" stylesheets="@FichierCss.css" />
             <Button fx:id="valider" layoutX="468.0" layoutY="528.0" mnemonicParsing="false" onAction="#SaveAvis" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #072671;" text="VALIDER" textFill="WHITE">
                <font>
@@ -185,7 +307,7 @@
                   </ImageView>
                   <ImageView fitHeight="160.0" fitWidth="200.0" onMouseClicked="#showHboxnothappy" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Image/ic-ct-s.png" />
+                        <Image url="@../Image/ic-ct-t.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="50.0" right="150.0" />
@@ -292,45 +414,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <HBox fx:id="hmenu" prefHeight="49.0" prefWidth="1370.0" style="-fx-background-color: #ffffff;" visible="false">
-         <children>
-            <Button mnemonicParsing="false" onMouseClicked="#showprofil" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Profil">
-               <HBox.margin>
-                  <Insets left="150.0" top="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Cour">
-               <HBox.margin>
-                  <Insets left="40.0" top="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#showinit" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Avis">
-               <HBox.margin>
-                  <Insets left="40.0" top="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#showAide" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Aide">
-               <HBox.margin>
-                  <Insets left="40.0" top="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-         </children>
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </HBox>
       <VBox fx:id="menuadmin" prefHeight="700.0" prefWidth="226.0" style="-fx-background-color: #28252e;" visible="false">
          <children>
             <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="232.0" style="-fx-background-color: #2b76a4;" text="   ADMIN" textFill="WHITE">
@@ -389,7 +472,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutX="10.0" layoutY="141.0" prefHeight="39.0" prefWidth="200.0" styleClass="btns" stylesheets="@FichierCss.css">
+            <HBox layoutX="10.0" layoutY="141.0" onMouseClicked="#showAjouterFormation" prefHeight="39.0" prefWidth="200.0" styleClass="btns" stylesheets="@FichierCss.css">
                <children>
                   <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -420,12 +503,22 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Button layoutX="1023.0" layoutY="23.0" mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #f2ebeb;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="985.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <PieChart fx:id="statistique" prefHeight="633.0" prefWidth="1144.0" title="Résultet de l'inscription" />
          </children>
       </VBox>
-      <VBox fx:id="apprenant" layoutX="227.0" prefHeight="700.0" prefWidth="1137.0" visible="false">
+      <VBox fx:id="apprenant" layoutX="227.0" prefHeight="700.0" prefWidth="1144.0" visible="false">
          <children>
             <Pane prefHeight="70.0" prefWidth="1139.0" style="-fx-background-color: #f2ebeb;">
                <children>
@@ -434,6 +527,16 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Button layoutX="1022.0" layoutY="23.0" mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #f2ebeb;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="983.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <TextField fx:id="search" prefHeight="25.0" prefWidth="320.0" promptText="Search">
@@ -465,6 +568,16 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Button layoutX="1021.0" layoutY="24.0" mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #f2ebeb;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="984.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <HBox prefHeight="66.0" prefWidth="454.0">
@@ -490,12 +603,20 @@
                         <Image url="@../Image/hardware-page-peripheral-print-printer-icon--icon-search-engine-13.png" />
                      </image>
                      <HBox.margin>
-                        <Insets right="10.0" top="15.0" />
+                        <Insets top="15.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextField fx:id="search1" prefHeight="25.0" prefWidth="148.0" promptText="Search">
+                  <ImageView fitHeight="62.0" fitWidth="62.0" onMouseClicked="#envoimail" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/unnamed_2.png" />
+                     </image>
                      <HBox.margin>
-                        <Insets bottom="30.0" left="400.0" right="400.0" top="70.0" />
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <TextField fx:id="search1" prefHeight="25.0" prefWidth="190.0" promptText="Search">
+                     <HBox.margin>
+                        <Insets bottom="30.0" left="350.0" right="350.0" top="70.0" />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -562,7 +683,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutX="10.0" layoutY="125.0" prefHeight="44.0" prefWidth="200.0" styleClass="btns" stylesheets="@FichierCss.css">
+            <HBox layoutX="10.0" layoutY="125.0" onMouseClicked="#showajouterCour" prefHeight="44.0" prefWidth="200.0" styleClass="btns" stylesheets="@FichierCss.css">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -632,7 +753,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="listeAvis" layoutX="228.0" layoutY="1.0" prefHeight="559.0" prefWidth="1144.0" visible="false">
+      <VBox fx:id="listeAvis" layoutX="228.0" layoutY="1.0" prefHeight="700.0" prefWidth="1144.0" visible="false">
          <children>
             <Pane prefHeight="70.0" prefWidth="607.0" style="-fx-background-color: #f2ebeb;">
                <children>
@@ -641,6 +762,16 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Button layoutX="1019.0" layoutY="23.0" mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #f2ebeb;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="982.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                  </ImageView>
                </children>
                <VBox.margin>
                   <Insets right="3.0" />
@@ -667,40 +798,104 @@
             </TableView>
          </children>
       </VBox>
-      <AnchorPane fx:id="aide" layoutX="-1.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1370.0" style="-fx-background-color: #E6E6E6;" visible="false">
+      <AnchorPane fx:id="aide" layoutX="-1.0" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1370.0" style="-fx-background-color: #E6E6E6;" visible="false">
          <children>
-            <AnchorPane layoutY="56.0" prefHeight="794.0" prefWidth="199.0" style="-fx-background-color: #27A6F8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <HBox layoutY="2.0" prefHeight="51.0" prefWidth="1370.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <Button layoutX="37.0" layoutY="284.0" mnemonicParsing="false" onAction="#addaide" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #F7F9F9;" text="ajouter" />
-                  <Button layoutX="37.0" layoutY="332.0" mnemonicParsing="false" onAction="#Edit" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #F7F9F9;" text="modifier" />
-                  <Button layoutX="37.0" layoutY="385.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #F7F9F9;" text="supprimer" />
-                  <TextField fx:id="text_s" layoutX="17.0" layoutY="27.0" prefHeight="26.0" prefWidth="130.0" promptText="Sujet" />
-                  <TextField fx:id="text_p" alignment="TOP_LEFT" layoutX="16.0" layoutY="74.0" prefHeight="138.0" prefWidth="174.0" promptText="Probléme " />
-                  <ImageView fitHeight="70.0" fitWidth="57.0" layoutX="17.0" layoutY="436.0" onMouseClicked="#goGoogle" pickOnBounds="true" preserveRatio="true">
+                  <Button mnemonicParsing="false" onMouseClicked="#showprofil" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Profil">
+                     <HBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#showListeCourApp" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Cour">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showinit" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Avis">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showAide" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Aide">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Image/googleNoire.jpg" />
+                        <Image url="@../Image/user.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="420.0" top="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #ffffff;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" top="12.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <AnchorPane layoutY="54.0" prefHeight="652.0" prefWidth="265.0" style="-fx-background-color: #2b76a4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="54.0">
+               <children>
+                  <TextField fx:id="text_s" layoutX="20.0" layoutY="124.0" prefHeight="40.0" prefWidth="226.0" promptText="Sujet" />
+                  <TextField fx:id="text_p" alignment="TOP_LEFT" layoutX="19.0" layoutY="193.0" prefHeight="138.0" prefWidth="226.0" promptText="Probléme " />
+                  <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="62.0" layoutY="62.0" onMouseClicked="#goGoogle" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/google_icon_131222.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="70.0" fitWidth="57.0" layoutX="90.0" layoutY="436.0" onMouseClicked="#goYoutube" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="45.0" fitWidth="57.0" layoutX="139.0" layoutY="62.0" onMouseClicked="#goYoutube" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Image/youtube.jpg" />
+                        <Image url="@../Image/1384060.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="text_mail" layoutX="17.0" layoutY="227.0" prefHeight="26.0" prefWidth="174.0" promptText="e-mail" />
+                  <TextField fx:id="text_mail" layoutX="19.0" layoutY="354.0" prefHeight="40.0" prefWidth="226.0" promptText="e-mail" />
+                  <Button layoutX="19.0" layoutY="418.0" mnemonicParsing="false" onAction="#addaide" prefHeight="30.0" prefWidth="226.0" style="-fx-background-color: #d3d3d3;" text="Ajouter">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button layoutX="20.0" layoutY="466.0" mnemonicParsing="false" onAction="#Edit" prefHeight="30.0" prefWidth="226.0" style="-fx-background-color: #d3d3d3;" text="Modifier">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button layoutX="20.0" layoutY="512.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="226.0" style="-fx-background-color: #d3d3d3;" text="Supprimer">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
-            <TableView fx:id="table_aide" fixedCellSize="0.0" layoutX="199.0" layoutY="96.0" onMouseClicked="#getSelected" prefHeight="211.0" prefWidth="770.0" AnchorPane.bottomAnchor="543.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="96.0">
+            <TableView fx:id="table_aide" fixedCellSize="0.0" layoutX="372.0" layoutY="128.0" onMouseClicked="#getSelected" prefHeight="198.0" prefWidth="893.0" AnchorPane.bottomAnchor="374.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="128.0">
                <columns>
                   <TableColumn fx:id="col_sujet" prefWidth="189.5999847650528" text="sujet" />
                   <TableColumn fx:id="col_probleme" prefWidth="305.5999755859375" text="probléme" />
                   <TableColumn fx:id="col_mail" prefWidth="305.5999755859375" text="e-mail" />
                </columns>
             </TableView>
-            <TextField fx:id="filterAide" layoutX="365.0" layoutY="62.0" promptText="Search" />
-            <WebView fx:id="ViewWeb" layoutX="200.0" layoutY="261.0" prefHeight="439.0" prefWidth="1171.0" />
+            <TextField fx:id="filterAide" layoutX="536.0" layoutY="77.0" prefHeight="25.0" prefWidth="220.0" promptText="Search" />
+            <WebView fx:id="ViewWeb" layoutX="265.0" layoutY="370.0" prefHeight="330.0" prefWidth="1106.0" style="visibility: #DCDCDC;" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="AideCom" layoutX="220.0" prefHeight="700.0" prefWidth="1144.0" visible="false">
+      <AnchorPane fx:id="AideCom" layoutX="220.0" prefHeight="700.0" prefWidth="1151.0" visible="false">
          <children>
             <TableView fx:id="table_aideF" layoutX="95.0" layoutY="71.0" onMouseClicked="#getSubject" prefHeight="211.0" prefWidth="969.0">
                <columns>
@@ -747,5 +942,400 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="profil" layoutX="1.0" prefHeight="712.0" prefWidth="1379.0" visible="false">
+         <children>
+            <VBox layoutY="48.0" prefHeight="652.0" prefWidth="304.0" style="-fx-background-color: #ADD8E6;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/people.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="80.0" top="80.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="label_nom" text="nom">
+                           <font>
+                              <Font name="Bell MT Bold" size="21.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="80.0" right="10.0" top="50.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="label_prenom" text="prenom">
+                           <font>
+                              <Font name="Bell MT" size="21.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="50.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#showModifierprofil" prefHeight="25.0" prefWidth="122.0" style="-fx-background-color: #27a3eb;" text="Modifier Profil">
+                     <VBox.margin>
+                        <Insets left="80.0" top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <ImageView fx:id="qr" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets left="60.0" right="20.0" top="40.0" />
+                     </VBox.margin></ImageView>
+               </children>
+            </VBox>
+            <VBox layoutX="304.0" layoutY="48.0" prefHeight="652.0" prefWidth="1066.0">
+               <children>
+                  <Label text="Profil">
+                     <font>
+                        <Font name="Bell MT Bold" size="31.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="100.0" right="30.0" top="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Détails du profil" textFill="#27a3eb">
+                     <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="100.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="49.0" prefWidth="1066.0">
+                     <children>
+                        <Label text="Adresse">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="label_adresse" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="1066.0">
+                     <children>
+                        <Label text="Date de naissance">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="label_datenaissance" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label text="Informations de contact" textFill="#27a3eb">
+                     <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="100.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="50.0" prefWidth="1066.0">
+                     <children>
+                        <Label text="E-mail">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="label_email" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="1066.0">
+                     <children>
+                        <Label text="Téléphone">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="label_telephone" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="49.0" prefWidth="1370.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#showprofil" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Profil">
+                     <HBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#showListeCourApp" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Cour">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showinit" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Avis">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#showAide" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" styleClass="menubar" stylesheets="@FichierCss.css" text="Aide">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="420.0" top="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #ffffff;" text="Déconnexion">
+                     <HBox.margin>
+                        <Insets left="5.0" top="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ajouterCour" layoutX="226.0" prefHeight="700.0" prefWidth="1151.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <Label layoutX="61.0" layoutY="220.0" text="Titre" />
+            <Button fx:id="btAjouter" layoutX="535.0" layoutY="391.0" mnemonicParsing="false" onAction="#enregistrer" style="-fx-background-color: #27A6F8;" text="Enregistrer" textFill="#f2f2f2" />
+            <Button fx:id="btnAnnuler" layoutX="450.0" layoutY="391.0" mnemonicParsing="false" onAction="#annuler" style="-fx-background-color: #27A6F8;" text="Annuler" textFill="WHITE" />
+            <TextField fx:id="tfTitre" layoutX="179.0" layoutY="216.0" />
+            <ComboBox fx:id="form" layoutX="179.0" layoutY="159.0" prefWidth="150.0" />
+            <Button fx:id="browse" layoutX="361.0" layoutY="264.0" mnemonicParsing="false" onAction="#Browse" style="-fx-background-color: #27A6F8;" text="Browse" textFill="#f2efef" />
+            <TextField fx:id="tfFichier" layoutX="179.0" layoutY="264.0" />
+            <ComboBox fx:id="combo_categorie" layoutX="178.0" layoutY="325.0" prefWidth="150.0" />
+            <Label layoutX="57.0" layoutY="329.0" text="Categorie" />
+            <Button fx:id="btn_categorie" layoutX="83.0" layoutY="416.0" mnemonicParsing="false" onAction="#showAjouterCatégorie" style="-fx-background-color: #27A6F8;" text="Categorie" textFill="#fffdfd" />
+            <Pane prefHeight="70.0" prefWidth="1151.0" style="-fx-background-color: #f2ebeb;">
+               <children>
+                  <Label layoutX="20.0" layoutY="10.0" prefHeight="51.0" prefWidth="130.0" text="Gestion Cour" textFill="#5b5555">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="1023.0" layoutY="23.0" mnemonicParsing="false" onAction="#déconnexion" onMouseClicked="#showPaneAcceuil" style="-fx-background-color: #f2ebeb;" text="Déconnexion">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="985.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/user.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Label layoutX="58.0" layoutY="163.0" text="Formation" />
+            <Button layoutX="247.0" layoutY="391.0" mnemonicParsing="false" onAction="#showConsulterCour" prefHeight="25.0" prefWidth="101.0" text="Consulter" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="consulterCour" layoutX="226.0" layoutY="-2.0" prefHeight="706.0" prefWidth="1144.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <Label layoutX="14.0" layoutY="23.0" prefHeight="36.0" prefWidth="299.0" text="Liste des cours" textFill="#4d4949">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tvCour" layoutY="61.0" prefHeight="288.0" prefWidth="635.0">
+               <columns>
+                  <TableColumn fx:id="clTitre" prefWidth="183.0" text="Titre" />
+                  <TableColumn fx:id="clFichier" editable="false" prefWidth="225.0" text="Fichier" />
+                  <TableColumn fx:id="clCategorie" editable="false" prefWidth="225.0" text="Categorie" />
+               </columns>
+            </TableView>
+            <Button fx:id="btSupprimer" layoutX="345.0" layoutY="372.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="25.0" prefWidth="172.0" style="-fx-background-color: #27A6F8;" text="Supprimer" textFill="WHITE" />
+            <TextField fx:id="searchh" layoutX="416.0" layoutY="29.0" onAction="#chercher" prefHeight="25.0" prefWidth="201.0" promptText="Recherche Rapide" />
+            <Button fx:id="btModifier" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" onAction="#showModifierCour" prefHeight="25.0" prefWidth="165.0" style="-fx-background-color: #27A6F8;" text="Mdofier" textFill="WHITE" />
+            <Button fx:id="btnstat" layoutX="703.0" layoutY="29.0" mnemonicParsing="false" onAction="#showStatCour" prefHeight="25.0" prefWidth="157.0" style="-fx-background-color: #990000;" text="Statistiques" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane id="AnchorPane" fx:id="ModifierCour" layoutX="226.0" layoutY="-3.0" prefHeight="503.0" prefWidth="635.0" style="-fx-background-color: #990000;" visible="false">
+         <children>
+            <AnchorPane layoutY="73.0" prefHeight="625.0" prefWidth="1144.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label layoutX="48.0" layoutY="21.0" prefHeight="36.0" prefWidth="299.0" text="Modifier des cours" textFill="#990000">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="48.0" layoutY="155.0" text="Fichier" />
+                  <Label layoutX="48.0" layoutY="104.0" text="Titre" />
+                  <Button layoutX="535.0" layoutY="391.0" mnemonicParsing="false" onAction="#enregistrerr" style="-fx-background-color: #990000;" text="Enregistrer" textFill="#f2f2f2" />
+                  <Button layoutX="450.0" layoutY="391.0" mnemonicParsing="false" onAction="#annuler" style="-fx-background-color: #990000;" text="Annuler" textFill="WHITE" />
+                  <TextField fx:id="tfTitre1" layoutX="177.0" layoutY="100.0" />
+                  <TextField fx:id="tfFichier1" layoutX="177.0" layoutY="151.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane id="AnchorPane" fx:id="statPane" layoutX="226.0" prefHeight="700.0" prefWidth="1144.0" style="-fx-background-color: #27A6F8;" visible="false">
+         <children>
+            <AnchorPane layoutY="66.0" prefHeight="632.0" prefWidth="1137.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label layoutX="48.0" layoutY="21.0" prefHeight="36.0" prefWidth="299.0" text="Statistique Cour" textFill="#464343">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <PieChart fx:id="pie" layoutX="135.0" layoutY="126.0" prefHeight="380.0" prefWidth="868.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="listeCourApp" layoutX="7.0" layoutY="48.0" prefHeight="652.0" prefWidth="1363.0" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutX="128.0" layoutY="57.0" prefHeight="36.0" prefWidth="336.0" text="Liste des cours" textFill="#2d2d32">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tvCour5" layoutX="115.0" layoutY="195.0" prefHeight="282.0" prefWidth="851.0">
+               <columns>
+                  <TableColumn fx:id="clTitre5" prefWidth="266.0" text="Titre" />
+                  <TableColumn fx:id="clFichier5" editable="false" prefWidth="279.0" text="Fichier" />
+                  <TableColumn fx:id="clCategorie5" editable="false" prefWidth="305.0" text="Categorie" />
+               </columns>
+            </TableView>
+            <TextField fx:id="search5" layoutX="554.0" layoutY="130.0" onAction="#chercher5" prefHeight="18.0" prefWidth="175.0" promptText="Recherche Rapide" />
+            <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="505.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../Desktop/CRUDeformation8/src/rech.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="PaneCategorie" layoutX="227.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1144.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <TableView fx:id="tvCategorie" layoutX="71.0" layoutY="144.0" prefHeight="288.0" prefWidth="966.0">
+               <columns>
+                  <TableColumn fx:id="clDescription" prefWidth="634.0" text="Description" />
+               </columns>
+            </TableView>
+            <Button layoutX="835.0" layoutY="454.0" mnemonicParsing="false" onAction="#SupprimerCategorie" prefHeight="25.0" prefWidth="172.0" style="-fx-background-color: #27A6F8;" text="Supprimer" textFill="WHITE" />
+            <Button fx:id="btModifier7" layoutX="280.0" layoutY="460.0" mnemonicParsing="false" onAction="#ModifierCategorie" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #27A6F8;" text="Modifier" textFill="WHITE" />
+            <Button layoutX="89.0" layoutY="460.0" mnemonicParsing="false" onAction="#AjouterCategorie" prefHeight="25.0" prefWidth="172.0" style="-fx-background-color: #27A6F8;" text="Ajouter" textFill="WHITE" />
+            <Button fx:id="btValider7" layoutX="517.0" layoutY="460.0" mnemonicParsing="false" onAction="#ValiderModification" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #27A6F8;" text="Valider" textFill="WHITE" />
+            <Label layoutX="200.0" layoutY="90.0" text="Description" />
+            <TextField fx:id="tfDescription" layoutX="289.0" layoutY="86.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane id="AnchorPane" fx:id="PaneAjouterFormation" layoutX="226.0" layoutY="-2.0" prefHeight="706.0" prefWidth="1144.0" style="-fx-background-color: #fff;" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" visible="false">
+         <children>
+            <Button fx:id="button" layoutX="518.0" layoutY="91.0" onAction="#handleButtonAction1" prefHeight="36.0" prefWidth="120.0" styleClass="custom-button" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" text="Ajout" />
+            <Label fx:id="label" layoutX="516.0" layoutY="30.0" minHeight="16" minWidth="69" />
+            <Button fx:id="modif" layoutX="518.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleModifAction" prefHeight="49.0" prefWidth="127.0" styleClass="custom-button" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" text="Modification" />
+            <Button fx:id="supression" layoutX="517.0" layoutY="241.0" onAction="#handledeleteAction" prefHeight="49.0" prefWidth="127.0" styleClass="custom-button" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" text="Supression" />
+            <Text fill="#2b76a4" layoutX="204.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des formation">
+               <font>
+                  <Font name="System Bold Italic" size="27.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Titre" />
+            <Text layoutX="35.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Prix" />
+            <Text layoutX="35.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Description" />
+            <TextArea fx:id="description" layoutX="153.0" layoutY="202.0" prefHeight="101.0" prefWidth="191.0" promptText="Description" styleClass="text-field" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" />
+            <TextField fx:id="prix" layoutX="153.0" layoutY="146.0" prefHeight="36.0" prefWidth="191.0" promptText="prix" styleClass="text-field" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" />
+            <TextField fx:id="titre" layoutX="153.0" layoutY="86.0" prefHeight="36.0" prefWidth="191.0" promptText="titre" styleClass="text-field" stylesheets="@../../../../../Desktop/jfxformation-main%20(1)/jfxformation-main/src/jfxformation/Styles.css" />
+            <TableView fx:id="table" layoutX="61.0" layoutY="353.0" prefHeight="200.0" prefWidth="731.0">
+               <columns>
+                  <TableColumn fx:id="ttitre" prefWidth="193.0" text="Titre" />
+                  <TableColumn fx:id="tprix" prefWidth="51.0" text="Prix" />
+                  <TableColumn fx:id="tdescription" prefWidth="486.0" text="Desciption" />
+               </columns>
+            </TableView>
+            <Label fx:id="message" layoutX="551.0" layoutY="22.0" style="-fx-text-fill: red;" />
+            <MenuBar layoutX="1.0" layoutY="2.0" prefHeight="25.0" prefWidth="808.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Formations">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Gestion des formation" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Session">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Gestion des session" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" onAction="#showChart" text="Statistiques">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showChart" text="Consulter statistiques" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      <AnchorPane id="AnchorPane" fx:id="PaneChart" layoutX="227.0" layoutY="1.0" prefHeight="700.0" prefWidth="1151.0" visible="false">
+         <children>
+            <BarChart fx:id="chart" barGap="2.0" categoryGap="6.0" layoutX="91.0" layoutY="77.0" prefHeight="533.0" prefWidth="957.0">
+               <xAxis>
+                  <CategoryAxis label="Formations" side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis label="Durée" side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <MenuBar prefHeight="25.0" prefWidth="1144.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Formations">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlenextAction" text="Gestion des formation" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Session">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#refresh" text="Gestion des session" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" onAction="#showChart" text="Statistiques">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlestat" text="Consulter statistiques" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+      
    </children>
 </AnchorPane>

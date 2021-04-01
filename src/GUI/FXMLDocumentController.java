@@ -8,6 +8,8 @@ package GUI;
 import Entites.sparkAide;
 import java.awt.event.ActionEvent;
 import Services.mysqlConnect;
+import Services.mysqlConnect;
+import Services.mysqlConnect;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;

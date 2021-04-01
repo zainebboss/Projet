@@ -29,6 +29,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     private Connection con;
     private PreparedStatement stat;
     private ResultSet rs;
+    boolean result;
     int i=0;
     final String pattern = "^[A-Za-z0-9+_.-]+@(.+)$";
     final String pattern1 ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
@@ -74,6 +75,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                return true;
  
             }
+        
         } catch (SQLException ex) {
             Logger.getLogger(ServiceUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,14 +86,14 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     @Override
     public void ajouter(Utilisateur U)  {
         
-        try {
-         stat=con.prepareStatement("INSERT INTO utilisateur(email,password,role,nom,prenom,telephone,adresse,date_naissance,enable) VALUES (?,?,?,?,?,?,?,?,?)");
-              
+       
          if(pregMatch(pattern, U.getEmail())){
-         stat.setString(1, U.getEmail());};
-//           if(pregMatch1(pattern1,U.getPassword())){    
-//           stat.setString(2, U.getPassword());}
-//         stat.setString(1,U.getEmail());
+              try {
+         stat=con.prepareStatement("INSERT INTO utilisateur(email,password,role,nom,prenom,telephone,adresse,date_naissance,enable) VALUES (?,?,?,?,?,?,?,?,?)");
+         stat.setString(1, U.getEmail());
+//       if(pregMatch1(pattern1,U.getPassword())){    
+//       stat.setString(2, U.getPassword());}
+//       stat.setString(1,U.getEmail());
          stat.setString(2,U.getPassword());  
          stat.setString(3,U.getRole());
          stat.setString(4,U.getNom());
@@ -100,10 +102,13 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
          stat.setString(7, U.getAdresse());
          stat.setDate(8, U.getDate_naissance());
          stat.setBoolean(9, U.isEnable());
-         stat.execute();
+         result=stat.execute();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+        }else{
+                  JOptionPane.showMessageDialog(null, "email incorrect");
+                 }
     }
         @Override
         public boolean modifier(Utilisateur U){
